@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Home from './src/screens/Home'
 import SignUp from './src/screens/SignUp'
 import SignIn from './src/screens/SignIn'
+import { AuthContext, AuthProvider } from './src/providers/AuthProvider'
 
 const HomeStack = createStackNavigator()
 const AuthStack = createStackNavigator()
@@ -36,10 +37,15 @@ const AuthStackScreen = () => {
 
 function App() {
   return (
-    <NavigationContainer>
-      <AuthStackScreen />
-      {/* <HomeStackScreen /> */}
-    </NavigationContainer>
+    <AuthProvider>
+      <AuthContext.Consumer>
+        {auth => (
+          <NavigationContainer>
+            {auth.isLoggedIn ? <HomeStackScreen /> : <AuthStackScreen />}
+          </NavigationContainer>
+        )}
+      </AuthContext.Consumer>
+    </AuthProvider>
   )
 }
 
