@@ -38,12 +38,12 @@ const SignInScreen = props => {
               type='solid'
               onPress={async () => {
                 let userData = await getDataJSON(email)
-                if (userData.password === password) {
+                if (password == '' || email == '') {
+                  alert('Field empty')
+                  console.log(userData)
+                } else if (userData.password == password) {
                   auth.setIsLoggedIn(true)
                   auth.setCurrentUser(userData)
-                } else {
-                  alert('Wrong credentials')
-                  console.log(userData)
                 }
               }}
             />

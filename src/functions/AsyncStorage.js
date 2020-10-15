@@ -23,15 +23,14 @@ const getData = async key => {
   try {
     let data = await AsyncStorage.getItem(key)
     if (data != null) {
-      alert(data)
+      return data
     } else {
-      alert('No data with this key')
+      alert('No data with this key!')
     }
   } catch (error) {
     alert(error)
   }
 }
-
 const getDataJSON = async key => {
   try {
     let data = await AsyncStorage.getItem(key)
@@ -39,10 +38,10 @@ const getDataJSON = async key => {
       const jsonData = JSON.parse(data)
       return jsonData
     } else {
-      alert('No data with this key')
+      alert('No data with this key!')
     }
   } catch (error) {
-    console.log(error)
+    alert(error)
   }
 }
 
