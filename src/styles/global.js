@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export default globalStyles = StyleSheet.create({
   container: {
-    margin: 10,
+    margin: 50,
   },
   textStyle: {
     fontSize: 25,

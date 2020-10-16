@@ -1,8 +1,8 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import HomeStackScreen from './src/routes/HomeStack'
 import AuthStackScreen from './src/routes/AuthStack'
 import { AuthContext, AuthProvider } from './src/providers/AuthProvider'
+import AppDrawerScreen from './src/routes/AppDrawer'
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <AuthContext.Consumer>
         {auth => (
           <NavigationContainer>
-            {auth.isLoggedIn ? <HomeStackScreen /> : <AuthStackScreen />}
+            {auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
           </NavigationContainer>
         )}
       </AuthContext.Consumer>
