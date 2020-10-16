@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { Text, Card, Avatar } from 'react-native-elements'
 import NavBar from '../components/NavBar'
+import globalStyles from '../styles/global'
 
 const NotificationScreen = ({ navigation }) => {
   return (
-    <View style={styles.viewStyle}>
+    <View style={globalStyles.view}>
       <NavBar navigation={navigation} />
       <Card>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -27,15 +28,5 @@ const NotificationScreen = ({ navigation }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  textStyle: {
-    fontSize: 30,
-    color: 'blue',
-  },
-  viewStyle: {
-    flex: 1,
-  },
-})
 
 export default NotificationScreen

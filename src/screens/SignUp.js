@@ -11,7 +11,7 @@ const SignUpScreen = ({ navigation }) => {
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   return (
-    <View style={globalStyles.viewStyle}>
+    <View style={globalStyles.authViewStyle}>
       <Card>
         <Card.Title>Welcome to AuthApp!</Card.Title>
         <Card.Divider />

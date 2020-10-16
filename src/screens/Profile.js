@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import React from 'react'
+import { View } from 'react-native'
 import { Text, Card, Avatar } from 'react-native-elements'
 import NavBar from '../components/NavBar'
 import { AuthContext } from '../providers/AuthProvider'
+import globalStyles from '../styles/global'
 
 const ProfileScreen = ({ navigation }) => {
   return (
     <AuthContext.Consumer>
       {auth => (
-        <View style={styles.viewStyle}>
+        <View style={globalStyles.view}>
           <NavBar navigation={navigation} />
           <Card>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -32,15 +33,5 @@ const ProfileScreen = ({ navigation }) => {
     </AuthContext.Consumer>
   )
 }
-
-const styles = StyleSheet.create({
-  textStyle: {
-    fontSize: 30,
-    color: 'blue',
-  },
-  viewStyle: {
-    flex: 1,
-  },
-})
 
 export default ProfileScreen

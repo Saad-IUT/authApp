@@ -12,7 +12,7 @@ const SignInScreen = ({ navigation }) => {
   return (
     <AuthContext.Consumer>
       {auth => (
-        <View style={globalStyles.viewStyle}>
+        <View style={globalStyles.authViewStyle}>
           <Card>
             <Card.Title>Welcome to AuthApp!</Card.Title>
             <Card.Divider />

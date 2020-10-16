@@ -1,14 +1,15 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { Card, Button, Text, Avatar, Input } from 'react-native-elements'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
+import globalStyles from '../styles/global'
 
 const HomeScreen = ({ navigation }) => {
   const post =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
   return (
-    <View style={styles.viewStyle}>
+    <View style={globalStyles.view}>
       <NavBar navigation={navigation} />
       <Card>
         <Input
@@ -90,15 +91,5 @@ const HomeScreen = ({ navigation }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  textStyle: {
-    fontSize: 30,
-    color: 'blue',
-  },
-  viewStyle: {
-    flex: 1,
-  },
-})
 
 export default HomeScreen
