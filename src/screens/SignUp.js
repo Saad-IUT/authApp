@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import { storeDataJSON } from '../functions/AsyncStorage'
+import globalStyles from '../styles/global'
 
 const SignUpScreen = props => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [id, setId] = useState('')
-  const [password, setPassword] = useState('')  
+  const [password, setPassword] = useState('')
   return (
-    <View style={styles.viewStyle}>
+    <View style={globalStyles.viewStyle}>
       <Card>
         <Card.Title>Welcome to AuthApp!</Card.Title>
         <Card.Divider />
@@ -73,11 +74,4 @@ const SignUpScreen = props => {
   )
 }
 
-const styles = StyleSheet.create({
-  viewStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#4bacb8',
-  },
-})
 export default SignUpScreen

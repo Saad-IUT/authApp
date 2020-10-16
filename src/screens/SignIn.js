@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../providers/AuthProvider'
 import { getDataJSON } from '../functions/AsyncStorage'
+import globalStyles from '../styles/global'
 
 const SignInScreen = props => {
   const [email, setEmail] = useState('')
@@ -11,7 +12,7 @@ const SignInScreen = props => {
   return (
     <AuthContext.Consumer>
       {auth => (
-        <View style={styles.viewStyle}>
+        <View style={globalStyles.viewStyle}>
           <Card>
             <Card.Title>Welcome to AuthApp!</Card.Title>
             <Card.Divider />
@@ -62,11 +63,4 @@ const SignInScreen = props => {
   )
 }
 
-const styles = StyleSheet.create({
-  viewStyle: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#4bacb8',
-  },
-})
 export default SignInScreen
