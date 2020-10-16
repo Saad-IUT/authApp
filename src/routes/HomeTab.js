@@ -13,7 +13,6 @@ const HomeTabScreen = () => {
         name='Home'
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
           tabBarIcon: ({ focused }) =>
             focused ? (
               <Entypo name='home' color='white' size={26} />
@@ -26,7 +25,6 @@ const HomeTabScreen = () => {
         name='Notification'
         component={NotificationScreen}
         options={{
-          tabBarLabel: 'Notifications',
           tabBarIcon: ({ focused }) =>
             focused ? (
               <Ionicons name='ios-notifications' size={26} color='white' />

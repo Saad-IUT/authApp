@@ -5,7 +5,7 @@ import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import { storeDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
 
-const SignUpScreen = props => {
+const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [id, setId] = useState('')
@@ -58,15 +58,15 @@ const SignUpScreen = props => {
               password,
             }
             storeDataJSON(email, currentUser)
-            props.navigation.navigate('SignIn')
+            navigation.navigate('SignIn')
           }}
         />
         <Button
           type='clear'
           icon={<AntDesign name='login' size={24} color='dodgerblue' />}
           title='  Already have an account?'
-          onPress={function () {
-            props.navigation.navigate('SignIn')
+          onPress={() => {
+            navigation.navigate('SignIn')
           }}
         />
       </Card>

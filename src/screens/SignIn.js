@@ -6,7 +6,7 @@ import { AuthContext } from '../providers/AuthProvider'
 import { getDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
 
-const SignInScreen = props => {
+const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   return (
@@ -52,8 +52,8 @@ const SignInScreen = props => {
               type='clear'
               icon={<AntDesign name='user' size={24} color='dodgerblue' />}
               title="  Don't have an account?"
-              onPress={function () {
-                props.navigation.navigate('SignUp')
+              onPress={() => {
+                navigation.navigate('SignUp')
               }}
             />
           </Card>

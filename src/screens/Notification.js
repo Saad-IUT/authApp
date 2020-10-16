@@ -1,50 +1,30 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, AsyncStorage } from 'react-native'
-import { Text, Card, Button, Avatar, Header } from 'react-native-elements'
-import { AuthContext } from '../providers/AuthProvider'
-const NotificationScreen = props => {
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import { Text, Card, Avatar } from 'react-native-elements'
+import NavBar from '../components/NavBar'
+
+const NotificationScreen = ({ navigation }) => {
   return (
-    <AuthContext.Consumer>
-      {auth => (
-        <View style={styles.viewStyle}>
-          <Header
-            leftComponent={{
-              icon: 'menu',
-              color: '#fff',
-              onPress: function () {
-                props.navigation.toggleDrawer()
-              },
+    <View style={styles.viewStyle}>
+      <NavBar navigation={navigation} />
+      <Card>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Avatar
+            containerStyle={{ backgroundColor: 'cyan' }}
+            rounded
+            icon={{
+              name: 'thumbs-o-up',
+              type: 'font-awesome',
+              color: 'black',
             }}
-            centerComponent={{ text: 'The Office', style: { color: '#fff' } }}
-            rightComponent={{
-              icon: 'lock-outline',
-              color: '#fff',
-              onPress: function () {
-                auth.setIsLoggedIn(false)
-                auth.setCurrentUser({})
-              },
-            }}
+            activeOpacity={1}
           />
-          <Card>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Avatar
-                containerStyle={{ backgroundColor: 'cyan' }}
-                rounded
-                icon={{
-                  name: 'thumbs-o-up',
-                  type: 'font-awesome',
-                  color: 'black',
-                }}
-                activeOpacity={1}
-              />
-              <Text style={{ paddingHorizontal: 10 }}>
-                Pam Beesley Liked Your Post.
-              </Text>
-            </View>
-          </Card>
+          <Text style={{ paddingHorizontal: 10 }}>
+            Pam Beesley Liked Your Post.
+          </Text>
         </View>
-      )}
-    </AuthContext.Consumer>
+      </Card>
+    </View>
   )
 }
 

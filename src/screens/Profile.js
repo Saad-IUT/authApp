@@ -1,30 +1,15 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, AsyncStorage } from 'react-native'
-import { Text, Card, Button, Avatar, Header } from 'react-native-elements'
+import { View, StyleSheet } from 'react-native'
+import { Text, Card, Avatar } from 'react-native-elements'
+import NavBar from '../components/NavBar'
 import { AuthContext } from '../providers/AuthProvider'
-const ProfileScreen = props => {
+
+const ProfileScreen = ({ navigation }) => {
   return (
     <AuthContext.Consumer>
       {auth => (
         <View style={styles.viewStyle}>
-          <Header
-            leftComponent={{
-              icon: 'menu',
-              color: '#fff',
-              onPress: function () {
-                props.navigation.toggleDrawer()
-              },
-            }}
-            centerComponent={{ text: 'The Office', style: { color: '#fff' } }}
-            rightComponent={{
-              icon: 'lock-outline',
-              color: '#fff',
-              onPress: function () {
-                auth.setIsLoggedIn(false)
-                auth.setCurrentUser({})
-              },
-            }}
-          />
+          <NavBar navigation={navigation} />
           <Card>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Avatar
