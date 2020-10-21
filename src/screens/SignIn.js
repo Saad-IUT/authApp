@@ -36,12 +36,10 @@ const SignInScreen = ({ navigation }) => {
             <Button
               icon={<AntDesign name='login' size={24} color='white' />}
               title='  Sign In!'
-              type='solid'
               onPress={async () => {
                 let userData = await getDataJSON(email)
                 if (password == '' || email == '') {
                   alert('Field empty')
-                  console.log(userData)
                 } else if (userData.password == password) {
                   auth.setIsLoggedIn(true)
                   auth.setCurrentUser(userData)

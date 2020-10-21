@@ -1,6 +1,6 @@
 import React from 'react'
-import { View } from 'react-native'
-import { Text, Card, Avatar } from 'react-native-elements'
+import { ActivityIndicator, View, Text } from 'react-native'
+import { Card, Avatar, Image } from 'react-native-elements'
 import NavBar from '../components/NavBar'
 import { AuthContext } from '../providers/AuthProvider'
 import globalStyles from '../styles/global'
@@ -9,8 +9,16 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <AuthContext.Consumer>
       {auth => (
-        <View style={globalStyles.view}>
+        <View>
           <NavBar navigation={navigation} />
+          <Image
+            source={{
+              uri:
+                'https://firebasestorage.googleapis.com/v0/b/gameroom-esd.appspot.com/o/831749020237.jpg?alt=media',
+            }}
+            style={{ width: 300, height: 400, marginLeft: 45 }}
+            PlaceholderContent={<ActivityIndicator />}
+          />
           <Card>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Avatar
@@ -24,9 +32,18 @@ const ProfileScreen = ({ navigation }) => {
                 activeOpacity={1}
               />
               <Text style={{ paddingHorizontal: 10 }}>
-                {auth.currentUser.name} Liked Your Post.
+                Pam Beesley Liked Your Post.
               </Text>
             </View>
+          </Card>
+          <Card>
+            <Text style={globalStyles.textStyle}>{` 
+                  About         
+        Name : ${auth.currentUser.name}
+        Born on : ${auth.currentUser.dob}
+        Address : ${auth.currentUser.address}
+        Works at : ${auth.currentUser.work}
+          `}</Text>
           </Card>
         </View>
       )}

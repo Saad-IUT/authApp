@@ -1,12 +1,12 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { Text, Card, Avatar } from 'react-native-elements'
 import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 
 const NotificationScreen = ({ navigation }) => {
   return (
-    <View style={globalStyles.view}>
+    <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
       <Card>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -20,9 +20,15 @@ const NotificationScreen = ({ navigation }) => {
             }}
             activeOpacity={1}
           />
-          <Text style={{ paddingHorizontal: 10 }}>
-            Pam Beesley Liked Your Post.
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Post')
+            }}
+          >
+            <Text style={{ paddingHorizontal: 10 }}>
+              Pam Beesley Liked Your Post.
+            </Text>
+          </TouchableOpacity>
         </View>
       </Card>
     </View>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import Profile from '../screens/Profile'
 import HomeTabScreen from './HomeTab'
+import Profile from '../screens/Profile'
 
 const AppDrawer = createDrawerNavigator()
 

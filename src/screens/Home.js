@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { Card, Button, Text, Avatar, Input } from 'react-native-elements'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
   const post =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
   return (
-    <View style={globalStyles.view}>
+    <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
       <Card>
         <Input
@@ -36,13 +36,19 @@ const HomeScreen = ({ navigation }) => {
           </Text>
         </View>
         <Text style={{ fontStyle: 'italic' }}> Posted on 10 Aug, 2020</Text>
-        <Text
-          style={{
-            paddingVertical: 10,
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Post')
           }}
         >
-          {post}
-        </Text>
+          <Text
+            style={{
+              paddingVertical: 10,
+            }}
+          >
+            {post}
+          </Text>
+        </TouchableOpacity>
         <Card.Divider />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button
@@ -50,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
             title='  Like (21)'
             icon={<AntDesign name='like2' size={24} color='dodgerblue' />}
           />
-          <Button type='solid' title='Comment (7)' />
+          <Button title='Comment (7)' />
         </View>
       </Card>
       <Card>
@@ -71,13 +77,19 @@ const HomeScreen = ({ navigation }) => {
           </Text>
         </View>
         <Text style={{ fontStyle: 'italic' }}> Posted on 10 Aug, 2020</Text>
-        <Text
-          style={{
-            paddingVertical: 10,
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Post')
           }}
         >
-          {post}
-        </Text>
+          <Text
+            style={{
+              paddingVertical: 10,
+            }}
+          >
+            {post}
+          </Text>
+        </TouchableOpacity>
         <Card.Divider />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Button
@@ -85,7 +97,7 @@ const HomeScreen = ({ navigation }) => {
             title='  Like (17)'
             icon={<AntDesign name='like2' size={24} color='dodgerblue' />}
           />
-          <Button type='solid' title='Comment (10)' />
+          <Button title='Comment (10)' />
         </View>
       </Card>
     </View>

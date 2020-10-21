@@ -31,6 +31,7 @@ const getData = async key => {
     alert(error)
   }
 }
+
 const getDataJSON = async key => {
   try {
     let data = await AsyncStorage.getItem(key)

@@ -49,7 +49,6 @@ const SignUpScreen = ({ navigation }) => {
         <Button
           icon={<AntDesign name='user' size={24} color='white' />}
           title='  Sign Up!'
-          type='solid'
           onPress={() => {
             let currentUser = {
               name,

@@ -1,6 +1,6 @@
 import React from 'react'
-import HomeScreen from '../screens/Home'
-import NotificationScreen from '../screens/Notification'
+import HomeStackScreen from './HomeStack'
+import NotificationStackScreen from './NotificationStack'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { Entypo, AntDesign, Ionicons } from '@expo/vector-icons'
 
@@ -11,7 +11,7 @@ const HomeTabScreen = () => {
     <HomeTab.Navigator initialRouteName='Home'>
       <HomeTab.Screen
         name='Home'
-        component={HomeScreen}
+        component={HomeStackScreen}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -23,7 +23,7 @@ const HomeTabScreen = () => {
       />
       <HomeTab.Screen
         name='Notification'
-        component={NotificationScreen}
+        component={NotificationStackScreen}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
