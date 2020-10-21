@@ -10,7 +10,7 @@ function App() {
       <AuthContext.Consumer>
         {auth => (
           <NavigationContainer>
-            {auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
+            {!auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
           </NavigationContainer>
         )}
       </AuthContext.Consumer>

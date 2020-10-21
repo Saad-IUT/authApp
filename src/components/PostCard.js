@@ -1,7 +1,10 @@
 import React from 'react'
+import { View } from 'react-native'
+import { Card, Button, Text, Avatar } from 'react-native-elements'
+import { AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../providers/AuthProvider'
 
-const PostCard = ({ navigation }) => {
+const PostCard = ({ navigation, name, date, post }) => {
   return (
     <AuthContext.Consumer>
       {auth => (
@@ -19,10 +22,10 @@ const PostCard = ({ navigation }) => {
               activeOpacity={1}
             />
             <Text h4Style={{ padding: 10 }} h4>
-              Jim Halpert
+              {name}
             </Text>
           </View>
-          <Text style={{ fontStyle: 'italic' }}> Posted on 10 Aug, 2020</Text>
+          <Text style={{ fontStyle: 'italic' }}> {date}</Text>
           <Text
             style={{
               paddingVertical: 10,
@@ -39,7 +42,12 @@ const PostCard = ({ navigation }) => {
               title='  Like (21)'
               icon={<AntDesign name='like2' size={24} color='dodgerblue' />}
             />
-            <Button title='Comment (7)' />
+            <Button
+              title='Comment (7)'
+              onPress={() => {
+                navigation.navigate('Post')
+              }}
+            />
           </View>
         </Card>
       )}
