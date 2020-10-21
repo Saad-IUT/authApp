@@ -4,12 +4,34 @@ import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import { storeDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
+import axios from 'axios'
 
 const SignUpScreen = ({ navigation }) => {
-  const [name, setName] = useState('')
+  const [handle, setHandle] = useState('')
+  const [studentId, setStudentId] = useState('')
   const [email, setEmail] = useState('')
-  const [id, setId] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const handleSubmit = () => {
+    axios
+      .post('/signup', {
+        handle,
+        studentId,
+        email,
+        password,
+        confirmPassword,
+      })
+      .then(res => {
+        // storeDataJSON(email, currentUser)
+        // navigation.navigate('SignIn')
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.error(err.response)
+      })
+  }
+
   return (
     <View style={globalStyles.authViewStyle}>
       <Card>
@@ -19,14 +41,14 @@ const SignUpScreen = ({ navigation }) => {
           leftIcon={<Ionicons name='ios-person' size={24} color='black' />}
           placeholder='Name'
           onChangeText={currentInput => {
-            setName(currentInput)
+            setHandle(currentInput)
           }}
         />
         <Input
           leftIcon={<Ionicons name='ios-school' size={24} color='black' />}
           placeholder='Student ID'
           onChangeText={currentInput => {
-            setId(currentInput)
+            setStudentId(currentInput)
           }}
         />
         <Input
@@ -36,7 +58,6 @@ const SignUpScreen = ({ navigation }) => {
             setEmail(currentInput)
           }}
         />
-
         <Input
           placeholder='Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -45,20 +66,18 @@ const SignUpScreen = ({ navigation }) => {
             setPassword(currentInput)
           }}
         />
-
+        <Input
+          placeholder='Confirm Password'
+          leftIcon={<Feather name='key' size={24} color='black' />}
+          secureTextEntry={true}
+          onChangeText={currentInput => {
+            setConfirmPassword(currentInput)
+          }}
+        />
         <Button
           icon={<AntDesign name='user' size={24} color='white' />}
           title='  Sign Up!'
-          onPress={() => {
-            let currentUser = {
-              name,
-              email,
-              id,
-              password,
-            }
-            storeDataJSON(email, currentUser)
-            navigation.navigate('SignIn')
-          }}
+          onPress={handleSubmit}
         />
         <Button
           type='clear'
