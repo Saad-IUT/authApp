@@ -1,14 +1,32 @@
-import React, { useState } from 'react'
-import { View } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { AsyncStorage, View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../providers/AuthProvider'
 import { getDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
+import axios from 'axios'
+import { signIn } from '../providers/actions/userAction'
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { user, userDispatch } = useContext(AuthContext)
+  // console.log(AsyncStorage.getAllKeys())
+  const handleSignIn = () => {
+    signIn(email, password, userDispatch)
+    // AsyncStorage.setItem('auth', true)
+  }
+
+  // onPress={async () => {
+  //   let userData = await getDataJSON(email)
+  //   if (password == '' || email == '') {
+  //     alert('Field empty')
+  //   } else if (userData.password == password) {
+  //     auth.setIsLoggedIn(true)
+  //     auth.setCurrentUser(userData)
+  //   }
+  // }}
   return (
     <AuthContext.Consumer>
       {auth => (
@@ -36,15 +54,7 @@ const SignInScreen = ({ navigation }) => {
             <Button
               icon={<AntDesign name='login' size={24} color='white' />}
               title='  Sign In!'
-              onPress={async () => {
-                let userData = await getDataJSON(email)
-                if (password == '' || email == '') {
-                  alert('Field empty')
-                } else if (userData.password == password) {
-                  auth.setIsLoggedIn(true)
-                  auth.setCurrentUser(userData)
-                }
-              }}
+              onPress={handleSignIn}
             />
             <Button
               type='clear'

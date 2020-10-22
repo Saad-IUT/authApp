@@ -13,7 +13,7 @@ const SignUpScreen = ({ navigation }) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const handleSubmit = () => {
+  const handleSignUp = () => {
     axios
       .post('/signup', {
         handle,
@@ -24,8 +24,8 @@ const SignUpScreen = ({ navigation }) => {
       })
       .then(res => {
         // storeDataJSON(email, currentUser)
-        // navigation.navigate('SignIn')
-        console.log(res.data)
+        navigation.navigate('SignIn')
+        // console.log(res.data)
       })
       .catch(err => {
         console.error(err.response)
@@ -77,7 +77,7 @@ const SignUpScreen = ({ navigation }) => {
         <Button
           icon={<AntDesign name='user' size={24} color='white' />}
           title='  Sign Up!'
-          onPress={handleSubmit}
+          onPress={handleSignUp}
         />
         <Button
           type='clear'
