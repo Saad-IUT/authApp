@@ -4,7 +4,7 @@ import { Card, Button, Text, Avatar } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../providers/AuthProvider'
 
-const PostCard = ({ navigation, name, date, post }) => {
+const PostCard = ({ navigation, name, date, body }) => {
   return (
     <AuthContext.Consumer>
       {auth => (
@@ -31,7 +31,7 @@ const PostCard = ({ navigation, name, date, post }) => {
               paddingVertical: 10,
             }}
           >
-            {post}
+            {body}
           </Text>
           <Card.Divider />
           <View

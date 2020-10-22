@@ -1,13 +1,27 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text } from 'react-native'
 import { Card, Button, Input } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
+import axios from 'axios'
 
 const HomeScreen = ({ navigation }) => {
-  const post =
+  const [post, setPost] = useState('')
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    axios
+      .get('/blogs')
+      .then(res => {
+        setPost(res.data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err.response)
+      })
+  }, [])
+  const body =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
   return (
     <View style={globalStyles.viewStyle}>
@@ -19,8 +33,16 @@ const HomeScreen = ({ navigation }) => {
         />
         <Button title='Post' type='outline' onPress={() => {}} />
       </Card>
-      <PostCard name={'Saad'} date={'Posted on 10 Aug, 2020'} post={post} />
-      <PostCard name={'Saad2'} date={'Posted on 12 Aug, 2020'} post={post} />
+      {!loading ? (
+        <PostCard
+          name={post[0].userHandle}
+          date={post[0].createdAt}
+          body={post[0].body}
+          userImage={post[0].userImage}
+        />
+      ) : (
+        <Text>Loading...</Text>
+      )}
     </View>
   )
 }
