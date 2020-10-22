@@ -39,6 +39,8 @@ const HomeScreen = ({ navigation }) => {
           date={post[0].createdAt}
           body={post[0].body}
           userImage={post[0].userImage}
+          commentCount={post[0].commentCount}
+          likeCount={post[0].likeCount}
         />
       ) : (
         <Text>Loading...</Text>

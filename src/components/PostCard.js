@@ -3,8 +3,16 @@ import { View } from 'react-native'
 import { Card, Button, Text, Avatar } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../providers/AuthProvider'
+import dayjs from 'dayjs'
 
-const PostCard = ({ navigation, name, date, body }) => {
+const PostCard = ({
+  navigation,
+  name,
+  date,
+  body,
+  commentCount,
+  likeCount,
+}) => {
   return (
     <AuthContext.Consumer>
       {auth => (
@@ -21,11 +29,13 @@ const PostCard = ({ navigation, name, date, body }) => {
               icon={{ name: 'user', type: 'font-awesome', color: 'black' }}
               activeOpacity={1}
             />
-            <Text h4Style={{ padding: 10 }} h4>
+            <Text h4Style={{ padding: 10, fontWeight: 'bold' }} h4>
               {name}
             </Text>
           </View>
-          <Text style={{ fontStyle: 'italic' }}> {date}</Text>
+          <Text style={{ fontStyle: 'italic' }}>
+            {dayjs(date).format('[Posted on] DD MMM,YYYY')}
+          </Text>
           <Text
             style={{
               paddingVertical: 10,
@@ -39,11 +49,11 @@ const PostCard = ({ navigation, name, date, body }) => {
           >
             <Button
               type='outline'
-              title='  Like (21)'
+              title={`  Like (${likeCount})`}
               icon={<AntDesign name='like2' size={24} color='dodgerblue' />}
             />
             <Button
-              title='Comment (7)'
+              title={`Comment (${commentCount})`}
               onPress={() => {
                 navigation.navigate('Post')
               }}
