@@ -5,6 +5,7 @@ import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../providers/AuthProvider'
 import { getDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
+import axios from 'axios'
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
@@ -36,15 +37,32 @@ const SignInScreen = ({ navigation }) => {
             <Button
               icon={<AntDesign name='login' size={24} color='white' />}
               title='  Sign In!'
-              onPress={async () => {
-                let userData = await getDataJSON(email)
-                if (password == '' || email == '') {
-                  alert('Field empty')
-                } else if (userData.password == password) {
-                  auth.setIsLoggedIn(true)
-                  auth.setCurrentUser(userData)
+              onPress={
+                //   async () => {
+                //   let userData = await getDataJSON(email)
+                //   if (password == '' || email == '') {
+                //     alert('Field empty')
+                //   } else if (userData.password == password) {
+                //     auth.setIsLoggedIn(true)
+                //     auth.setCurrentUser(userData)
+                //   }
+                // }
+                () => {
+                  axios
+                    .post('/login', {
+                      email,
+                      password,
+                    })
+                    .then(res => {
+                      // storeDataJSON(email, currentUser)
+                      console.log(res.data)
+                      auth.setIsLoggedIn(true)
+                    })
+                    .catch(err => {
+                      console.error(err.response)
+                    })
                 }
-              }}
+              }
             />
             <Button
               type='clear'

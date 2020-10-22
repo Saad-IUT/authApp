@@ -24,7 +24,7 @@ const SignUpScreen = ({ navigation }) => {
       })
       .then(res => {
         // storeDataJSON(email, currentUser)
-        // navigation.navigate('SignIn')
+        navigation.navigate('SignIn')
         console.log(res.data)
       })
       .catch(err => {
