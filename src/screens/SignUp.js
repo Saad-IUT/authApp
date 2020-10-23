@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
-import { storeDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
-import axios from 'axios'
 import { signUp } from '../context/actions/userActions'
 
 const SignUpScreen = ({ navigation }) => {

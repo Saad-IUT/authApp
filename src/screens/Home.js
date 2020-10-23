@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, ActivityIndicator } from 'react-native'
+import { View, FlatList, ActivityIndicator } from 'react-native'
 import { Card, Button, Input } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import axios from 'axios'
-import { getData } from '../functions/AsyncStorage'
-import { getAuthUser } from '../context/actions/userActions'
 import { useNetInfo } from '@react-native-community/netinfo'
 const HomeScreen = ({ navigation }) => {
   const netInfo = useNetInfo()
