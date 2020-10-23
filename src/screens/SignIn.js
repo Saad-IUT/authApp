@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
-import { AuthContext } from '../providers/AuthProvider'
+import { AuthContext } from '../context/providers/AuthProvider'
 import { getDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
 import axios from 'axios'
+import { signIn } from '../context/actions/userActions'
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
@@ -38,19 +39,7 @@ const SignInScreen = ({ navigation }) => {
               icon={<AntDesign name='login' size={24} color='white' />}
               title='  Sign In!'
               onPress={() => {
-                axios
-                  .post('/login', {
-                    email,
-                    password,
-                  })
-                  .then(res => {
-                    // storeDataJSON(email, currentUser)
-                    console.log(res.data)
-                    auth.setIsLoggedIn(true)
-                  })
-                  .catch(err => {
-                    console.error(err.response)
-                  })
+                signIn(email, password, auth)
               }}
             />
             <Button

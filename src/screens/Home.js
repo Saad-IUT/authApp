@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator } from 'react-native'
 import { Card, Button, Input } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
@@ -8,10 +8,11 @@ import PostCard from '../components/PostCard'
 import axios from 'axios'
 
 const HomeScreen = ({ navigation }) => {
-  const [post, setPost] = useState('')
-  const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    axios
+  const [post, setPost] = useState([])
+  const [loading, setLoading] = useState(false)
+  const getPost = async () => {
+    setLoading(true)
+    await axios // blog actions
       .get('/blogs')
       .then(res => {
         setPost(res.data)
@@ -20,6 +21,9 @@ const HomeScreen = ({ navigation }) => {
       .catch(err => {
         console.error(err.response)
       })
+  }
+  useEffect(() => {
+    getPost()
   }, [])
   const body =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
@@ -33,17 +37,25 @@ const HomeScreen = ({ navigation }) => {
         />
         <Button title='Post' type='outline' onPress={() => {}} />
       </Card>
-      {!loading ? (
-        <PostCard
-          name={post[0].userHandle}
-          date={post[0].createdAt}
-          body={post[0].body}
-          userImage={post[0].userImage}
-          commentCount={post[0].commentCount}
-          likeCount={post[0].likeCount}
-        />
+      {loading ? (
+        <ActivityIndicator size='large' color='blue' animating={true} />
       ) : (
-        <Text>Loading...</Text>
+        <FlatList
+          data={post}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <PostCard
+                name={item.userHandle}
+                date={item.createdAt}
+                body={item.body}
+                userImage={item.userImage}
+                commentCount={item.commentCount}
+                likeCount={item.likeCount}
+              />
+            )
+          }}
+        />
       )}
     </View>
   )

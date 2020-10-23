@@ -2,7 +2,7 @@ import React from 'react'
 import { ActivityIndicator, View, Text } from 'react-native'
 import { Card, Avatar, Image } from 'react-native-elements'
 import NavBar from '../components/NavBar'
-import { AuthContext } from '../providers/AuthProvider'
+import { AuthContext } from '../context/providers/AuthProvider'
 import globalStyles from '../styles/global'
 
 const ProfileScreen = ({ navigation }) => {

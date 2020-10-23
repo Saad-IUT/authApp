@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { Card, Button, Text, Avatar } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'
-import { AuthContext } from '../providers/AuthProvider'
+import { AuthContext } from '../context/providers/AuthProvider'
 import dayjs from 'dayjs'
 
 const PostCard = ({

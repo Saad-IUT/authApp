@@ -5,6 +5,7 @@ import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import { storeDataJSON } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
 import axios from 'axios'
+import { signUp } from '../context/actions/userActions'
 
 const SignUpScreen = ({ navigation }) => {
   const [handle, setHandle] = useState('')
@@ -14,22 +15,7 @@ const SignUpScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleSubmit = () => {
-    axios
-      .post('/signup', {
-        handle,
-        studentId,
-        email,
-        password,
-        confirmPassword,
-      })
-      .then(res => {
-        // storeDataJSON(email, currentUser)
-        navigation.navigate('SignIn')
-        console.log(res.data)
-      })
-      .catch(err => {
-        console.error(err.response)
-      })
+    signUp(handle, studentId, email, password, confirmPassword, navigation)
   }
 
   return (

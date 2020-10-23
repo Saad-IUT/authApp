@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header } from 'react-native-elements'
-import { AuthContext } from '../providers/AuthProvider'
+import { AuthContext } from '../context/providers/AuthProvider'
 
 const NavBar = ({ navigation }) => {
   return (
