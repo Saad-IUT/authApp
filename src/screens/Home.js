@@ -8,8 +8,12 @@ import PostCard from '../components/PostCard'
 import axios from 'axios'
 import { getData } from '../functions/AsyncStorage'
 import { getAuthUser } from '../context/actions/userActions'
-
+import { useNetInfo } from '@react-native-community/netinfo'
 const HomeScreen = ({ navigation }) => {
+  const netInfo = useNetInfo()
+  if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
+    alert('No Internet!')
+  }
   const [post, setPost] = useState([])
   const [loading, setLoading] = useState(false)
   const getPost = async () => {
