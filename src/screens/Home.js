@@ -6,6 +6,8 @@ import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import axios from 'axios'
+import { getData } from '../functions/AsyncStorage'
+import { getAuthUser } from '../context/actions/userActions'
 
 const HomeScreen = ({ navigation }) => {
   const [post, setPost] = useState([])
@@ -38,7 +40,9 @@ const HomeScreen = ({ navigation }) => {
         <Button title='Post' type='outline' onPress={() => {}} />
       </Card>
       {loading ? (
-        <ActivityIndicator size='large' color='blue' animating={true} />
+        <Card>
+          <ActivityIndicator size='large' color='blue' animating={true} />
+        </Card>
       ) : (
         <FlatList
           data={post}
