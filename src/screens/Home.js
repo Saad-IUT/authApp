@@ -52,6 +52,7 @@ const HomeScreen = ({ navigation }) => {
                 userImage={item.userImage}
                 commentCount={item.commentCount}
                 likeCount={item.likeCount}
+                navigation={navigation}
               />
             )
           }}

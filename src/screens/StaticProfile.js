@@ -6,7 +6,7 @@ import { getUser } from '../context/actions/userActions'
 import { AuthContext } from '../context/providers/AuthProvider'
 import globalStyles from '../styles/global'
 
-const ProfileScreen = ({ navigation }) => {
+const StaticProfileScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
 
   // const getUser = async () => {
@@ -29,7 +29,7 @@ const ProfileScreen = ({ navigation }) => {
       {auth => (
         <View>
           <NavBar navigation={navigation} />
-          <Image
+          {/* <Image
             source={{
               uri:
                 'https://firebasestorage.googleapis.com/v0/b/gameroom-esd.appspot.com/o/831749020237.jpg?alt=media',
@@ -48,11 +48,11 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={globalStyles.textStyle}>Born on :</Text>
             <Text style={globalStyles.textStyle}>Address :</Text>
             <Text style={globalStyles.textStyle}>Works at :</Text>
-          </Card>
+          </Card> */}
         </View>
       )}
     </AuthContext.Consumer>
   )
 }
 
-export default ProfileScreen
+export default StaticProfileScreen

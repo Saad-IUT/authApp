@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { Card, Button, Text, Avatar } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../context/providers/AuthProvider'
@@ -29,9 +29,16 @@ const PostCard = ({
               icon={{ name: 'user', type: 'font-awesome', color: 'black' }}
               activeOpacity={1}
             />
-            <Text h4Style={{ padding: 10, fontWeight: 'bold' }} h4>
-              {name}
-            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                // console.log(navigation)
+                navigation.navigate('Static Profile')
+              }}
+            >
+              <Text h4Style={{ padding: 10, fontWeight: 'bold' }} h4>
+                {name}
+              </Text>
+            </TouchableOpacity>
           </View>
           <Text style={{ fontStyle: 'italic' }}>
             {dayjs(date).format('[Posted on] DD MMM,YYYY')}
@@ -55,7 +62,7 @@ const PostCard = ({
             <Button
               title={`Comment (${commentCount})`}
               onPress={() => {
-                navigation.navigate('Post')
+                navigation.navigate('Comment')
               }}
             />
           </View>

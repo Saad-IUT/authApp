@@ -40,3 +40,15 @@ export const signIn = (email, password, auth) => {
       console.error(err.response)
     })
 }
+
+export const getUser = user => {
+  axios
+    .get(`/user/${user}`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.error(err.response)
+    })
+}

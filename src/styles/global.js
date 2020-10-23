@@ -10,8 +10,8 @@ export default StyleSheet.create({
     backgroundColor: '#4bacb8',
   },
   textStyle: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'darkblue',
-    paddingRight: 30,
+    paddingVertical: 10,
   },
 })
