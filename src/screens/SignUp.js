@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles/global'
@@ -11,9 +11,13 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(false)
 
   const handleSubmit = () => {
+    setDisabled(true)
     signUp(handle, studentId, email, password, confirmPassword, navigation)
+    setLoading(true)
   }
 
   return (
@@ -27,6 +31,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setHandle(currentInput)
           }}
+          disabled={disabled}
         />
         <Input
           leftIcon={<Ionicons name='ios-school' size={24} color='black' />}
@@ -34,6 +39,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setStudentId(currentInput)
           }}
+          disabled={disabled}
         />
         <Input
           leftIcon={<FontAwesome name='envelope' size={24} color='black' />}
@@ -41,6 +47,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setEmail(currentInput)
           }}
+          disabled={disabled}
         />
         <Input
           placeholder='Password'
@@ -49,6 +56,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setPassword(currentInput)
           }}
+          disabled={disabled}
         />
         <Input
           placeholder='Confirm Password'
@@ -57,20 +65,32 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setConfirmPassword(currentInput)
           }}
+          disabled={disabled}
         />
-        <Button
-          icon={<AntDesign name='user' size={24} color='white' />}
-          title='  Sign Up!'
-          onPress={handleSubmit}
-        />
-        <Button
-          type='clear'
-          icon={<AntDesign name='login' size={24} color='dodgerblue' />}
-          title='  Already have an account?'
-          onPress={() => {
-            navigation.navigate('SignIn')
-          }}
-        />
+        {loading ? (
+          <Button
+            icon={
+              <ActivityIndicator size='large' color='white' animating={true} />
+            }
+            title='  Loading...'
+          />
+        ) : (
+          <>
+            <Button
+              icon={<AntDesign name='user' size={24} color='white' />}
+              title='  Sign Up!'
+              onPress={handleSubmit}
+            />
+            <Button
+              type='clear'
+              icon={<AntDesign name='login' size={24} color='dodgerblue' />}
+              title='  Already have an account?'
+              onPress={() => {
+                navigation.navigate('SignIn')
+              }}
+            />
+          </>
+        )}
       </Card>
     </View>
   )
