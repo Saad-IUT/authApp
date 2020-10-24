@@ -8,15 +8,15 @@ import axios from 'axios'
 const App = () => {
   axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
   return (
-      <AuthProvider>
-        <AuthContext.Consumer>
-          {auth => (
-            <NavigationContainer>
-              {auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
-            </NavigationContainer>
-          )}
-        </AuthContext.Consumer>
-      </AuthProvider>
+    <AuthProvider>
+      <AuthContext.Consumer>
+        {auth => (
+          <NavigationContainer>
+            {!auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
+          </NavigationContainer>
+        )}
+      </AuthContext.Consumer>
+    </AuthProvider>
   )
 }
 

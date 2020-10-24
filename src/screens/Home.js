@@ -7,13 +7,17 @@ import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import axios from 'axios'
 import { useNetInfo } from '@react-native-community/netinfo'
+import { getData } from '../functions/AsyncStorage'
+import { addBlog } from '../context/actions/blogActions'
 const HomeScreen = ({ navigation }) => {
   const netInfo = useNetInfo()
   if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
     alert('No Internet!')
   }
+  const [newPost, setNewPost] = useState('')
   const [post, setPost] = useState([])
   const [loading, setLoading] = useState(false)
+
   const getPost = async () => {
     setLoading(true)
     await axios // blog actions
@@ -26,11 +30,11 @@ const HomeScreen = ({ navigation }) => {
         console.error(err.response)
       })
   }
+
   useEffect(() => {
     getPost()
   }, [])
-  const body =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
@@ -38,8 +42,17 @@ const HomeScreen = ({ navigation }) => {
         <Input
           placeholder="What's On Your Mind?"
           leftIcon={<Entypo name='pencil' size={24} color='black' />}
+          onChangeText={currentInput => {
+            setNewPost(currentInput)
+          }}
         />
-        <Button title='Post' type='outline' onPress={() => {}} />
+        <Button
+          title='Post'
+          type='outline'
+          onPress={() => {
+            addBlog(newPost)
+          }}
+        />
       </Card>
       {loading ? (
         <Card>
@@ -62,6 +75,7 @@ const HomeScreen = ({ navigation }) => {
               />
             )
           }}
+          keyExtractor={item => item.blogId}
         />
       )}
     </View>
