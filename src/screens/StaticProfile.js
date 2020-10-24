@@ -7,8 +7,6 @@ import { AuthContext } from '../context/providers/AuthProvider'
 import globalStyles from '../styles/global'
 
 const StaticProfileScreen = ({ navigation }) => {
-  const [loading, setLoading] = useState(false)
-
   // const getUser = async () => {
   //   setLoading(true)
   //   await axios // blog actions
@@ -29,6 +27,7 @@ const StaticProfileScreen = ({ navigation }) => {
       {auth => (
         <View>
           <NavBar navigation={navigation} />
+          <Text>Static Profile</Text>
           {/* <Image
             source={{
               uri:

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const addBlog = async newPost => {
   axios
-    .post('/blog', { body: { blog: newPost } })
+    .post('/blog', { body: newPost })
     .then(res => {
       console.log(res.data)
     })
