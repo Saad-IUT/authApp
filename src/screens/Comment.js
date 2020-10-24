@@ -1,15 +1,31 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, FlatList, ActivityIndicator } from 'react-native'
 import { Card, Button, Text, Avatar, Input } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
-
+import axios from 'axios'
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
-
+  const [loading, setLoading] = useState(false)
+  const [comment, setComment] = useState('')
+  const getOneBlog = () => {
+    setLoading(true)
+    axios
+      .get(`/blog/${blogId}`)
+      .then(res => {
+        setComment(res.data.comments)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err.response)
+      })
+  }
+  useEffect(() => {
+    getOneBlog()
+  }, [])
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
@@ -50,7 +66,33 @@ const Comment = ({ navigation, route }) => {
         />
         <Button title='Comment' onPress={() => {}} />
       </Card>
-      <CommentCard blogId={blogId} />
+      {loading ? (
+        <Card>
+          <ActivityIndicator size='large' color='blue' animating={true} />
+        </Card>
+      ) : (
+        <FlatList
+          data={comment}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <CommentCard
+                name={item.userHandle}
+                date={item.createdAt}
+                body={item.body}
+              />
+            )
+          }}
+          keyExtractor={item => item.createdAt}
+        />
+      )}
+      {!loading && !comment.length && (
+        <Card>
+          <Text style={{ textAlign: 'center' }}>
+            Be the first to comment ☝
+          </Text>
+        </Card>
+      )}
     </View>
   )
 }
