@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import HomeScreen from '../screens/Home'
 import CommentScreen from '../screens/Comment'
-import StaticProfileScreen from '../screens/StaticProfile'
 
 const HomeStack = createStackNavigator()
 

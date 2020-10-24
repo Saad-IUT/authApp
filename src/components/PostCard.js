@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 
 const PostCard = ({
   navigation,
+  blogId,
   name,
   date,
   body,
@@ -62,7 +63,14 @@ const PostCard = ({
             <Button
               title={`Comment (${commentCount})`}
               onPress={() => {
-                navigation.navigate('Comment')
+                navigation.navigate('Comment', {
+                  blogId,
+                  name,
+                  date,
+                  body,
+                  commentCount,
+                  likeCount,
+                })
               }}
             />
           </View>

@@ -79,6 +79,7 @@ const HomeScreen = ({ navigation }) => {
           renderItem={({ item }) => {
             return (
               <PostCard
+                blogId={item.blogId}
                 name={item.userHandle}
                 date={item.createdAt}
                 body={item.body}

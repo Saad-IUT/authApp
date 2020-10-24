@@ -7,13 +7,13 @@ import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
 
-const Comment = ({ navigation, route }) => {
+const PostScreen = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
 
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
-      <Card>
+      {/* <Card>
         <View
           style={{
             flexDirection: 'row',
@@ -42,17 +42,9 @@ const Comment = ({ navigation, route }) => {
         </Text>
         <Card.Divider />
         <Text>{` ${likeCount} Likes, ${commentCount} Comments`}</Text>
-      </Card>
-      <Card>
-        <Input
-          placeholder='Write Somethong!'
-          leftIcon={<Entypo name='pencil' size={24} color='black' />}
-        />
-        <Button title='Comment' onPress={() => {}} />
-      </Card>
-      <CommentCard blogId={blogId} />
+      </Card> */}
     </View>
   )
 }
 
-export default Comment
+export default PostScreen

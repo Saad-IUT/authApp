@@ -2,8 +2,6 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import NotificationScreen from '../screens/Notification'
-import CommentScreen from '../screens/Comment'
-import StaticProfileScreen from '../screens/StaticProfile'
 
 const NotificationStack = createStackNavigator()
 
@@ -13,11 +11,6 @@ const NotificationStackScreen = () => {
       <NotificationStack.Screen
         name='Notification'
         component={NotificationScreen}
-        options={{ headerShown: false }}
-      />
-      <NotificationStack.Screen
-        name='Comment'
-        component={CommentScreen}
         options={{ headerShown: false }}
       />
     </NotificationStack.Navigator>
