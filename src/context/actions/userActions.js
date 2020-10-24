@@ -33,8 +33,7 @@ export const signIn = (email, password, auth) => {
       password,
     })
     .then(async res => {
-      storeData('token', res.data.token)
-      // console.log(res.data)
+      setAuthorizationHeader(res.data.token)
       auth.setIsLoggedIn(true)
     })
     .catch(err => {
@@ -70,4 +69,10 @@ export const getAuthUser = async () => {
     .catch(err => {
       console.error(err.response)
     })
+}
+
+const setAuthorizationHeader = token => {
+  const FBIdToken = `Bearer ${token}`
+  storeData('FBIdToken', FBIdToken)
+  axios.defaults.headers.common['Authorization'] = FBIdToken
 }

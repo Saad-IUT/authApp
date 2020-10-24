@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
 import { AuthContext } from '../context/providers/AuthProvider'
@@ -9,6 +9,8 @@ import { signIn } from '../context/actions/userActions'
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(false)
   return (
     <AuthContext.Consumer>
       {auth => (
@@ -22,6 +24,7 @@ const SignInScreen = ({ navigation }) => {
               onChangeText={currentInput => {
                 setEmail(currentInput)
               }}
+              disabled={disabled}
             />
 
             <Input
@@ -31,23 +34,40 @@ const SignInScreen = ({ navigation }) => {
               onChangeText={currentInput => {
                 setPassword(currentInput)
               }}
+              disabled={disabled}
             />
-
-            <Button
-              icon={<AntDesign name='login' size={24} color='white' />}
-              title='  Sign In!'
-              onPress={() => {
-                signIn(email, password, auth)
-              }}
-            />
-            <Button
-              type='clear'
-              icon={<AntDesign name='user' size={24} color='dodgerblue' />}
-              title="  Don't have an account?"
-              onPress={() => {
-                navigation.navigate('SignUp')
-              }}
-            />
+            {loading ? (
+              <Button
+                icon={
+                  <ActivityIndicator
+                    size='large'
+                    color='white'
+                    animating={true}
+                  />
+                }
+                title='  Loading...'
+              />
+            ) : (
+              <>
+                <Button
+                  icon={<AntDesign name='login' size={24} color='white' />}
+                  title='  Sign In!'
+                  onPress={() => {
+                    setDisabled(true)
+                    signIn(email, password, auth)
+                    setLoading(true)
+                  }}
+                />
+                <Button
+                  type='clear'
+                  icon={<AntDesign name='user' size={24} color='dodgerblue' />}
+                  title="  Don't have an account?"
+                  onPress={() => {
+                    navigation.navigate('SignUp')
+                  }}
+                />
+              </>
+            )}
           </Card>
         </View>
       )}
