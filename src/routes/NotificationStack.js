@@ -20,11 +20,6 @@ const NotificationStackScreen = () => {
         component={CommentScreen}
         options={{ headerShown: false }}
       />
-      <NotificationStack.Screen
-        name='Static Profile'
-        component={StaticProfileScreen}
-        options={{ headerShown: false }}
-      />
     </NotificationStack.Navigator>
   )
 }

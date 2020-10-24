@@ -22,7 +22,7 @@ const NotificationScreen = ({ navigation }) => {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Post')
+              navigation.navigate('Comment')
             }}
           >
             <Text style={{ paddingHorizontal: 10 }}>

@@ -20,11 +20,6 @@ const HomeStackScreen = () => {
         component={CommentScreen}
         options={{ headerShown: false }}
       />
-      <HomeStack.Screen
-        name='Static Profile'
-        component={StaticProfileScreen}
-        options={{ headerShown: false }}
-      />
     </HomeStack.Navigator>
   )
 }
