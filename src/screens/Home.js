@@ -7,13 +7,11 @@ import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import axios from 'axios'
 import { useNetInfo } from '@react-native-community/netinfo'
-import { getData } from '../functions/AsyncStorage'
-import { addBlog } from '../context/actions/blogActions'
 const HomeScreen = ({ navigation }) => {
-  // const netInfo = useNetInfo()
-  // if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
-  //   alert('No Internet!')
-  // }
+  const netInfo = useNetInfo()
+  if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
+    alert('No Internet!')
+  }
   const [newPost, setNewPost] = useState('')
   const [post, setPost] = useState([])
   const [loading, setLoading] = useState(false)
@@ -40,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
 
   const getPost = async () => {
     setLoading(true)
-    await axios // blog actions
+    await axios
       .get('/blogs')
       .then(res => {
         setPost(res.data)

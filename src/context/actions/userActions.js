@@ -19,7 +19,6 @@ export const signUp = (
     })
     .then(res => {
       navigation.navigate('SignIn')
-      // console.log(res.data)
     })
     .catch(err => {
       console.error(err.response)
@@ -45,7 +44,6 @@ export const getUser = user => {
   axios
     .get(`/user/${user}`)
     .then(res => {
-      // console.log(res.data.token)
       return res.data
     })
     .catch(err => {
@@ -55,7 +53,6 @@ export const getUser = user => {
 
 export const getAuthUser = async () => {
   const token = await getData('token')
-  // console.log('authuser' + token)
   axios
     .get('/user/me', {
       headers: {

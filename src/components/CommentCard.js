@@ -17,7 +17,6 @@ const CommentCard = ({ name, date, body }) => {
           >
             <TouchableOpacity
               onPress={() => {
-                // console.log(navigation)
                 navigation.navigate('Static Profile')
               }}
             >

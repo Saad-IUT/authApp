@@ -32,7 +32,6 @@ const PostCard = ({
             />
             <TouchableOpacity
               onPress={() => {
-                // console.log(navigation)
                 navigation.navigate('Static Profile')
               }}
             >
