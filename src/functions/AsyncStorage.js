@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 const storeData = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, value)
-    alert('Data Stored Successfully!')
+    // alert('Data Stored Successfully!')
   } catch (error) {
     alert(error)
   }
@@ -49,7 +49,7 @@ const getDataJSON = async key => {
 const removeData = async key => {
   try {
     await AsyncStorage.removeItem(key)
-    alert('Data Removed Successfully')
+    // alert('Data Removed Successfully')
   } catch (error) {
     alert(error)
   }

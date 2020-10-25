@@ -40,31 +40,18 @@ export const signIn = (email, password, auth) => {
     })
 }
 
-export const getUser = user => {
+export const handlePost = async () => {
+  const post = await getData('post')
   axios
-    .get(`/user/${user}`)
+    .post('/blog', { body: post })
     .then(res => {
-      return res.data
+      console.log(res.data)
+      alert('Posted successfully!!')
     })
     .catch(err => {
       console.error(err.response)
     })
-}
-
-export const getAuthUser = async () => {
-  const token = await getData('token')
-  axios
-    .get('/user/me', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(res => {
-      return res.data
-    })
-    .catch(err => {
-      console.error(err.response)
-    })
+  removeData('post')
 }
 
 const setAuthorizationHeader = token => {

@@ -7,7 +7,8 @@ import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import axios from 'axios'
 import { useNetInfo } from '@react-native-community/netinfo'
-
+import { handlePost } from '../context/actions/userActions'
+import { storeData } from '../functions/AsyncStorage'
 const HomeScreen = ({ navigation }) => {
   const netInfo = useNetInfo()
   if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
@@ -17,17 +18,6 @@ const HomeScreen = ({ navigation }) => {
   const [newPost, setNewPost] = useState('')
   const [post, setPost] = useState([])
   const [loading, setLoading] = useState(false)
-
-  const postBlog = () => {
-    axios
-      .post('/blog', { body: newPost })
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(err => {
-        console.error(err.response)
-      })
-  }
 
   const getPost = async () => {
     setLoading(true)
@@ -54,10 +44,10 @@ const HomeScreen = ({ navigation }) => {
           placeholder="What's On Your Mind?"
           leftIcon={<Entypo name='pencil' size={24} color='black' />}
           onChangeText={currentInput => {
-            setNewPost(currentInput)
+            storeData('post', currentInput)
           }}
         />
-        <Button title='Post' type='outline' onPress={postBlog} />
+        <Button title='Post' type='outline' onPress={handlePost} />
       </Card>
       {loading ? (
         <Card>

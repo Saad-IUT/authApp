@@ -7,25 +7,14 @@ import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
 import axios from 'axios'
-
+import { handleComment } from '../context/actions/blogActions'
+import { storeData } from '../functions/AsyncStorage'
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
   const [loading, setLoading] = useState(false)
   const [comment, setComment] = useState('')
-
-  const handleComment = () => {
-    axios
-      .post(`/blog/${blogId}/comment`, { body: 'I have commented' })
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(err => {
-        console.error(err.response)
-      })
-  }
-
   const getOneBlog = () => {
-    setLoading(true)
+    setLoading(true) // loading ta store e rakhte hobe
     axios
       .get(`/blog/${blogId}`)
       .then(res => {
@@ -40,7 +29,7 @@ const Comment = ({ navigation, route }) => {
   useEffect(() => {
     getOneBlog()
   }, [])
-  
+
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
@@ -78,8 +67,11 @@ const Comment = ({ navigation, route }) => {
         <Input
           placeholder='Write Somethong!'
           leftIcon={<Entypo name='pencil' size={24} color='black' />}
+          onChangeText={currentInput => {
+            storeData('comment', currentInput)
+          }}
         />
-        <Button title='Comment' onPress={handleComment} />
+        <Button title='Comment' onPress={() => handleComment(blogId)} />
       </Card>
       {loading ? (
         <Card>
