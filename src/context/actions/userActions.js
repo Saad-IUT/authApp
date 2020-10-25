@@ -60,7 +60,6 @@ export const getAuthUser = async () => {
       },
     })
     .then(res => {
-      console.log('userActions' + res.data)
       return res.data
     })
     .catch(err => {

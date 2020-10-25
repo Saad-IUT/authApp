@@ -3,7 +3,6 @@ import { ActivityIndicator, View } from 'react-native'
 import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
 import { AuthContext } from '../context/providers/AuthProvider'
-import { getData } from '../functions/AsyncStorage'
 import globalStyles from '../styles/global'
 import axios from 'axios'
 
@@ -13,14 +12,8 @@ const ProfileScreen = ({ navigation }) => {
 
   const getAuthUser = async () => {
     setLoading(true)
-    const token = await getData('token')
-    console.log('token' + token)
     axios
-      .get('/user/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get('/user/me')
       .then(res => {
         setCredentials(res.data.credentials)
         setLoading(false)

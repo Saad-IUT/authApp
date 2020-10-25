@@ -1,53 +1,71 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ActivityIndicator, View } from 'react-native'
-import { Card, Avatar, Image, Text } from 'react-native-elements'
+import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
-import { getUser } from '../context/actions/userActions'
 import { AuthContext } from '../context/providers/AuthProvider'
 import globalStyles from '../styles/global'
+import axios from 'axios'
 
-const StaticProfileScreen = ({ navigation }) => {
-  // const getUser = async () => {
-  //   setLoading(true)
-  //   await axios // blog actions
-  //     .get(`/user/${currentUser}`)
-  //     .then(res => {
-  //       setPost(res.data)
-  //       setLoading(false)
-  //     })
-  //     .catch(err => {
-  //       console.error(err.response)
-  //     })
-  // }
-  // useEffect(() => {
-  //   getUser()
-  // }, [])
+const StaticProfileScreen = ({ navigation, route }) => {
+  const { name } = route.params
+  const [user, setUser] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  const getAuthUser = async () => {
+    setLoading(true)
+    axios
+      .get(`/user/${name}`)
+      .then(res => {
+        setUser(res.data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error(err.response)
+      })
+  }
+
+  useEffect(() => {
+    getAuthUser()
+  }, [])
+
   return (
     <AuthContext.Consumer>
       {auth => (
         <View>
           <NavBar navigation={navigation} />
-          <Text>Static Profile</Text>
-          {/* <Image
+          <Image
             source={{
-              uri:
-                'https://firebasestorage.googleapis.com/v0/b/gameroom-esd.appspot.com/o/831749020237.jpg?alt=media',
+              uri: user.imageUrl,
             }}
             style={{ width: 300, height: 400, marginLeft: 45 }}
             PlaceholderContent={<ActivityIndicator />}
           />
           <Card>
-            <Text
-              h4Style={{ padding: 10, fontWeight: 'bold', textAlign: 'center' }}
-              h4
-            >
-              About
-            </Text>
-            <Text style={globalStyles.textStyle}>Name :</Text>
-            <Text style={globalStyles.textStyle}>Born on :</Text>
-            <Text style={globalStyles.textStyle}>Address :</Text>
-            <Text style={globalStyles.textStyle}>Works at :</Text>
-          </Card> */}
+            {loading ? (
+              <ActivityIndicator size='large' color='blue' animating={true} />
+            ) : (
+              <>
+                <Text
+                  h4Style={{
+                    padding: 10,
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                  }}
+                  h4
+                >
+                  About
+                </Text>
+                <Text style={globalStyles.textStyle}>Name : {user.handle}</Text>
+                <Text style={globalStyles.textStyle}>Born on : {user.dob}</Text>
+                <Text style={globalStyles.textStyle}>
+                  Address : {user.location}
+                </Text>
+                <Text style={globalStyles.textStyle}>
+                  Works at : {user.work}
+                </Text>
+              </>
+            )}
+          </Card>
         </View>
       )}
     </AuthContext.Consumer>

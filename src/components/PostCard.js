@@ -32,7 +32,7 @@ const PostCard = ({
             />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Static Profile')
+                navigation.navigate('Static Profile', { name })
               }}
             >
               <Text h4Style={{ padding: 10, fontWeight: 'bold' }} h4>

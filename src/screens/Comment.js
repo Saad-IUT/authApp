@@ -14,7 +14,6 @@ const Comment = ({ navigation, route }) => {
   const [comment, setComment] = useState('')
 
   const handleComment = () => {
-    console.log('New comment')
     axios
       .post(`/blog/${blogId}/comment`, { body: 'I have commented' })
       .then(res => {

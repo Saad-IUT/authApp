@@ -9,15 +9,15 @@ import AsyncStorage from '@react-native-community/async-storage'
 // Clear all keys
 //AsyncStorage.clear
 // Check all keys of asyncstorage
-AsyncStorage.getAllKeys((err, keys) => {
-  AsyncStorage.multiGet(keys, (error, stores) => {
-    stores.map((result, i, store) => {
-      console.log('AsyncStorage')
-      console.log({ [store[i][0]]: store[i][1] })
-      return true
-    })
-  })
-})
+// AsyncStorage.getAllKeys((err, keys) => {
+//   AsyncStorage.multiGet(keys, (error, stores) => {
+//     stores.map((result, i, store) => {
+//       console.log('AsyncStorage')
+//       console.log({ [store[i][0]]: store[i][1] })
+//       return true
+//     })
+//   })
+// })
 
 const App = () => {
   axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
