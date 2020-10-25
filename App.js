@@ -5,10 +5,10 @@ import { AuthContext, AuthProvider } from './src/context/providers/AuthProvider'
 import AppDrawerScreen from './src/routes/AppDrawer'
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
-import { getData } from './src/functions/AsyncStorage'
 
-//Check all keys of asyncstorage
-// AsyncStorage.clear
+// Clear all keys
+//AsyncStorage.clear
+// Check all keys of asyncstorage
 AsyncStorage.getAllKeys((err, keys) => {
   AsyncStorage.multiGet(keys, (error, stores) => {
     stores.map((result, i, store) => {
@@ -26,7 +26,7 @@ const App = () => {
       <AuthContext.Consumer>
         {auth => (
           <NavigationContainer>
-            {!auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
+            {auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
           </NavigationContainer>
         )}
       </AuthContext.Consumer>

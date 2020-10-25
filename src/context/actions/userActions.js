@@ -17,7 +17,7 @@ export const signUp = (
       password,
       confirmPassword,
     })
-    .then(res => {
+    .then(() => {
       navigation.navigate('SignIn')
     })
     .catch(err => {

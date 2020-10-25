@@ -7,6 +7,7 @@ import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
 import axios from 'axios'
+
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
   const [loading, setLoading] = useState(false)
@@ -15,16 +16,7 @@ const Comment = ({ navigation, route }) => {
   const handleComment = () => {
     console.log('New comment')
     axios
-      .post(
-        `/blog/${blogId}/comment`,
-        { body: 'I have commented' },
-        {
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImQxMGM4ZjhiMGRjN2Y1NWUyYjM1NDFmMjllNWFjMzc0M2Y3N2NjZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYmxvZ2FwcDQ3IiwiYXVkIjoiYmxvZ2FwcDQ3IiwiYXV0aF90aW1lIjoxNjAzNjMyMzM3LCJ1c2VyX2lkIjoiRGxRTWgxM3hzWWdOR3dvSlFwcXd6MjBJSVRBMyIsInN1YiI6IkRsUU1oMTN4c1lnTkd3b0pRcHF3ejIwSUlUQTMiLCJpYXQiOjE2MDM2MzIzMzcsImV4cCI6MTYwMzYzNTkzNywiZW1haWwiOiJzYWFkQGl1dC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsic2FhZEBpdXQuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.HVtx_ol9kVYtU8BLEmnhKi2qHouYN9jntgBxqlwGmSgpGwLrDggS11ahimzTLI_ABO9YgKx82bd2oacK6aHBKrj_5N20ENcAVJevXyMq3taih6nVYKfl6IVC33fWyPaoEPXFH7leqKNRyIMW2ArqOFLr2WcVXcUWiCzjpfvpjymdQf42T_W7HJ5K3M1EBbGumnc4ksLpMDRAh69HqCAzFxhIA014iWWG17H2x_CsMeAYYGBYeunBVy1sEjvA7pYtXZfi6MBnf_Sdb1kUs1PR3657ju69qeMy5y5QKOsoJ1EKfbSOYC1WymbeN_u5F47J4FFctVu9bKn_c2WoM-QsiQ',
-          },
-        }
-      )
+      .post(`/blog/${blogId}/comment`, { body: 'I have commented' })
       .then(res => {
         console.log(res.data)
       })
@@ -32,6 +24,7 @@ const Comment = ({ navigation, route }) => {
         console.error(err.response)
       })
   }
+
   const getOneBlog = () => {
     setLoading(true)
     axios
@@ -44,9 +37,11 @@ const Comment = ({ navigation, route }) => {
         console.error(err.response)
       })
   }
+
   useEffect(() => {
     getOneBlog()
   }, [])
+  
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
