@@ -9,6 +9,7 @@
     "git": "git add . && git commit -m \"Done\" && git push"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "^5.9.7",
     "@react-navigation/drawer": "^5.9.3",

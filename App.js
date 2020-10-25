@@ -1,9 +1,23 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import AuthStackScreen from './src/routes/AuthStack'
 import { AuthContext, AuthProvider } from './src/context/providers/AuthProvider'
 import AppDrawerScreen from './src/routes/AppDrawer'
 import axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage'
+import { getData } from './src/functions/AsyncStorage'
+
+//Check all keys of asyncstorage
+// AsyncStorage.clear
+AsyncStorage.getAllKeys((err, keys) => {
+  AsyncStorage.multiGet(keys, (error, stores) => {
+    stores.map((result, i, store) => {
+      console.log('AsyncStorage')
+      console.log({ [store[i][0]]: store[i][1] })
+      return true
+    })
+  })
+})
 
 const App = () => {
   axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
