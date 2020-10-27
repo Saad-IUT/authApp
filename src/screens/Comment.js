@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { View, FlatList, ActivityIndicator } from 'react-native'
 import { Card, Button, Text, Avatar, Input } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
@@ -6,30 +6,22 @@ import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
-import axios from 'axios'
 import { handleComment } from '../context/actions/blogActions'
 import { storeData } from '../functions/AsyncStorage'
+import { AuthContext } from '../context/providers/AuthProvider'
+import { getOneBlog } from '../context/actions/blogActions'
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
-  const [loading, setLoading] = useState(false)
-  const [comment, setComment] = useState('')
-  const getOneBlog = () => {
-    setLoading(true) // loading ta store e rakhte hobe
-    axios
-      .get(`/blog/${blogId}`)
-      .then(res => {
-        setComment(res.data.comments)
-        setLoading(false)
-      })
-      .catch(err => {
-        console.error(err.response)
-      })
-  }
+  const { blog, blogDispatch } = useContext(AuthContext)
+  const { ui, uiDispatch } = useContext(AuthContext)
+  const { comments } = blog
+  const { loading } = ui
 
   useEffect(() => {
-    getOneBlog()
-  }, [])
-
+    getOneBlog(blogId, blogDispatch, uiDispatch)
+  }, [blogId])
+  console.log(comments)
+  console.log(loading)
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
@@ -79,7 +71,7 @@ const Comment = ({ navigation, route }) => {
         </Card>
       ) : (
         <FlatList
-          data={comment}
+          data={comments}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => {
             return (
@@ -93,7 +85,7 @@ const Comment = ({ navigation, route }) => {
           keyExtractor={item => item.createdAt}
         />
       )}
-      {!loading && !comment.length && (
+      {!loading && comments.length === 0 && (
         <Card>
           <Text style={{ textAlign: 'center' }}>
             Be the first to comment ☝

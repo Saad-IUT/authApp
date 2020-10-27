@@ -14,7 +14,7 @@ const NavBar = ({ navigation }) => {
               navigation.toggleDrawer()
             },
           }}
-          centerComponent={{ text: 'The Office', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Blog-47', style: { color: '#fff' } }}
           rightComponent={{
             icon: 'lock-outline',
             color: '#fff',
