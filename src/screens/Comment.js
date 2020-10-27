@@ -12,13 +12,13 @@ import { AuthContext } from '../context/providers/AuthProvider'
 import { getOneBlog } from '../context/actions/blogActions'
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
-  const { blog, blogDispatch } = useContext(AuthContext)
+  const { comment, commentDispatch } = useContext(AuthContext)
   const { ui, uiDispatch } = useContext(AuthContext)
-  const { comments } = blog
+  const { comments } = comment
   const { loading } = ui
 
   useEffect(() => {
-    getOneBlog(blogId, blogDispatch, uiDispatch)
+    getOneBlog(blogId, commentDispatch, uiDispatch)
   }, [blogId])
   console.log(comments)
   console.log(loading)

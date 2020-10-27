@@ -4,8 +4,7 @@ import AuthStackScreen from './src/routes/AuthStack'
 import { AuthContext, AuthProvider } from './src/context/providers/AuthProvider'
 import AppDrawerScreen from './src/routes/AppDrawer'
 import axios from 'axios'
-import AsyncStorage from '@react-native-community/async-storage'
-
+// import AsyncStorage from '@react-native-community/async-storage'
 // Clear all keys
 //AsyncStorage.clear
 // Check all keys of asyncstorage

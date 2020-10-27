@@ -16,13 +16,13 @@ export const handleComment = async blogId => {
   removeData('comment')
 }
 
-export const getOneBlog = (blogId, dispatch) => {
-  dispatch({ type: LOADING_UI })
+export const getOneBlog = (blogId, commentDispatch, uiDispatch) => {
+  uiDispatch({ type: LOADING_UI })
   axios
     .get(`/blog/${blogId}`)
     .then(res => {
-      dispatch({ type: SET_COMMENT, payload: res.data.comments })
-      dispatch({ type: STOP_LOADING_UI })
+      commentDispatch({ type: SET_COMMENT, payload: res.data.comments })
+      uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => console.error(err.response))
 }
