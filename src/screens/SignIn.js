@@ -54,7 +54,7 @@ const SignInScreen = ({ navigation }) => {
                   title='  Sign In!'
                   onPress={() => {
                     setDisabled(true)
-                    signIn(email, password, auth)
+                    signIn(email, password)
                     setLoading(true)
                   }}
                 />

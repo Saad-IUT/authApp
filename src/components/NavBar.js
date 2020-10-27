@@ -1,5 +1,6 @@
 import React from 'react'
 import { Header } from 'react-native-elements'
+import { logoutUser } from '../context/actions/userActions'
 import { AuthContext } from '../context/providers/AuthProvider'
 
 const NavBar = ({ navigation }) => {
@@ -19,8 +20,7 @@ const NavBar = ({ navigation }) => {
             icon: 'lock-outline',
             color: '#fff',
             onPress: () => {
-              auth.setIsLoggedIn(false)
-              auth.setCurrentUser({})
+              logoutUser()
             },
           }}
         />

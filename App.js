@@ -1,35 +1,36 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import AuthStackScreen from './src/routes/AuthStack'
-import { AuthContext, AuthProvider } from './src/context/providers/AuthProvider'
+import { AuthContext } from './src/context/providers/AuthProvider'
 import AppDrawerScreen from './src/routes/AppDrawer'
 import axios from 'axios'
-// import AsyncStorage from '@react-native-community/async-storage'
-// Clear all keys
-//AsyncStorage.clear
-// Check all keys of asyncstorage
-// AsyncStorage.getAllKeys((err, keys) => {
-//   AsyncStorage.multiGet(keys, (error, stores) => {
-//     stores.map((result, i, store) => {
-//       console.log('AsyncStorage')
-//       console.log({ [store[i][0]]: store[i][1] })
-//       return true
-//     })
-//   })
-// })
+import { getData } from './src/functions/AsyncStorage'
+import jwtDecode from 'jwt-decode'
+import { SET_AUTHENTICATED, SET_UNAUTHENTICATED } from './src/context/types'
+
+axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 
 const App = () => {
-  axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
+  const { auth, authDispatch } = useContext(AuthContext)
+  const { authenticated } = auth
+  const getAuth = async () => {
+    const token = await getData('FBIdToken')
+    if (token) {
+      const decodedToken = jwtDecode(token)
+      if (decodedToken.exp * 1000 < Date.now()) {
+        authDispatch({ type: SET_UNAUTHENTICATED })
+      } else {
+        authDispatch({ type: SET_AUTHENTICATED })
+      }
+    }
+  }
+  useEffect(() => {
+    getAuth()
+  }, [])
   return (
-    <AuthProvider>
-      <AuthContext.Consumer>
-        {auth => (
-          <NavigationContainer>
-            {!auth.isLoggedIn ? <AppDrawerScreen /> : <AuthStackScreen />}
-          </NavigationContainer>
-        )}
-      </AuthContext.Consumer>
-    </AuthProvider>
+    <NavigationContainer>
+      {authenticated ? <AppDrawerScreen /> : <AuthStackScreen />}
+    </NavigationContainer>
   )
 }
 

@@ -20,8 +20,7 @@ const Comment = ({ navigation, route }) => {
   useEffect(() => {
     getOneBlog(blogId, commentDispatch, uiDispatch)
   }, [blogId])
-  console.log(comments)
-  console.log(loading)
+
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
