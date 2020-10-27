@@ -5,7 +5,7 @@ import UserReducer from '../reducers/UserReducer'
 const AuthContext = React.createContext()
 
 const AuthProvider = ({ children }) => {
-  const [blog, blogDispatch] = useReducer(BlogReducer, [], () => {
+  const [comment, commentDispatch] = useReducer(BlogReducer, [], () => {
     return { comments: [] }
   })
   const [ui, uiDispatch] = useReducer(UIReducer, [], () => {
@@ -17,8 +17,8 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        blog,
-        blogDispatch,
+        comment,
+        commentDispatch,
         ui,
         uiDispatch,
         auth,

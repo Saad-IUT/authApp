@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
@@ -11,6 +11,8 @@ const SignInScreen = ({ navigation }) => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const { auth, authDispatch } = useContext(AuthContext)
+
   return (
     <AuthContext.Consumer>
       {auth => (
@@ -54,7 +56,7 @@ const SignInScreen = ({ navigation }) => {
                   title='  Sign In!'
                   onPress={() => {
                     setDisabled(true)
-                    signIn(email, password)
+                    signIn(email, password, authDispatch)
                     setLoading(true)
                   }}
                 />

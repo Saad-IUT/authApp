@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { getData, removeData, storeData } from '../../functions/AsyncStorage'
-import { SET_UNAUTHENTICATED } from '../types'
+import { SET_AUTHENTICATED, SET_UNAUTHENTICATED } from '../types'
+
 export const signUp = (
   handle,
   studentId,
@@ -25,14 +26,15 @@ export const signUp = (
     })
 }
 
-export const signIn = (email, password) => {
+export const signIn = (email, password, dispatch) => {
   axios
     .post('/login', {
       email,
       password,
     })
-    .then(async res => {
+    .then(res => {
       setAuthorizationHeader(res.data.token)
+      dispatch({ type: SET_AUTHENTICATED })
     })
     .catch(err => {
       console.error(err.response)
@@ -53,7 +55,7 @@ export const handlePost = async () => {
   removeData('post')
 }
 
-export const logoutUser = () => async dispatch => {
+export const logoutUser = async dispatch => {
   await removeData('FBIdToken')
   delete axios.defaults.headers.common['Authorization']
   dispatch({ type: SET_UNAUTHENTICATED })

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Header } from 'react-native-elements'
 import { logoutUser } from '../context/actions/userActions'
 import { AuthContext } from '../context/providers/AuthProvider'
-
+import {SET_UNAUTHENTICATED} from '../context/types'
 const NavBar = ({ navigation }) => {
+  const { auth, authDispatch } = useContext(AuthContext)
   return (
     <AuthContext.Consumer>
       {auth => (
@@ -20,7 +21,8 @@ const NavBar = ({ navigation }) => {
             icon: 'lock-outline',
             color: '#fff',
             onPress: () => {
-              logoutUser()
+              logoutUser(authDispatch)
+              // authDispatch({ type: SET_UNAUTHENTICATED })
             },
           }}
         />

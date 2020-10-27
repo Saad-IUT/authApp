@@ -7,6 +7,7 @@ import axios from 'axios'
 import { getData } from './src/functions/AsyncStorage'
 import jwtDecode from 'jwt-decode'
 import { SET_AUTHENTICATED, SET_UNAUTHENTICATED } from './src/context/types'
+import { logoutUser } from './src/context/actions/userActions'
 
 axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 
@@ -18,7 +19,7 @@ const App = () => {
     if (token) {
       const decodedToken = jwtDecode(token)
       if (decodedToken.exp * 1000 < Date.now()) {
-        authDispatch({ type: SET_UNAUTHENTICATED })
+        logoutUser(authDispatch)
       } else {
         authDispatch({ type: SET_AUTHENTICATED })
       }
