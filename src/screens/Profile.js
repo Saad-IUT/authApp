@@ -1,31 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
 import { AuthContext } from '../context/providers/AuthProvider'
 import globalStyles from '../styles/global'
-import axios from 'axios'
 import { FontAwesome } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
+import { getAuthUser } from '../context/actions/userActions'
 const ProfileScreen = ({ navigation }) => {
-  const [credentials, setCredentials] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  const getAuthUser = async () => {
-    setLoading(true)
-    axios
-      .get('/user/me')
-      .then(res => {
-        setCredentials(res.data.credentials)
-        setLoading(false)
-      })
-      .catch(err => {
-        console.error(err.response)
-      })
-  }
+  const { user, userDispatch } = useContext(AuthContext)
+  const { credentials } = user
+  const { ui, uiDispatch } = useContext(AuthContext)
+  const { loading } = ui
 
   useEffect(() => {
-    getAuthUser()
+    getAuthUser(uiDispatch, userDispatch)
   }, [])
 
   return (

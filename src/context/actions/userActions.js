@@ -1,6 +1,12 @@
 import axios from 'axios'
-import { getData, removeData, storeData } from '../../functions/AsyncStorage'
-import { SET_AUTHENTICATED, SET_UNAUTHENTICATED } from '../types'
+import { removeData, storeData } from '../../functions/AsyncStorage'
+import {
+  SET_AUTHENTICATED,
+  SET_UNAUTHENTICATED,
+  LOADING_UI,
+  STOP_LOADING_UI,
+  SET_USER,
+} from '../types'
 
 export const signUp = (
   handle,
@@ -41,18 +47,17 @@ export const signIn = (email, password, dispatch) => {
     })
 }
 
-export const handlePost = async () => {
-  const post = await getData('post')
+export const getAuthUser = (uiDispatch, userDispatch) => {
+  uiDispatch({ type: LOADING_UI })
   axios
-    .post('/blog', { body: post })
+    .get('/user/me')
     .then(res => {
-      console.log(res.data)
-      alert('Posted successfully!!')
+      userDispatch({ type: SET_USER, payload: res.data.credentials })
+      uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
       console.error(err.response)
     })
-  removeData('post')
 }
 
 export const logoutUser = async dispatch => {

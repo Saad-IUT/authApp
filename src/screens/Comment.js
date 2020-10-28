@@ -6,15 +6,15 @@ import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
-import { handleComment } from '../context/actions/blogActions'
+import { handleComment } from '../context/actions/dataActions'
 import { storeData } from '../functions/AsyncStorage'
 import { AuthContext } from '../context/providers/AuthProvider'
-import { getOneBlog } from '../context/actions/blogActions'
+import { getOneBlog } from '../context/actions/dataActions'
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
   const { comment, commentDispatch } = useContext(AuthContext)
-  const { ui, uiDispatch } = useContext(AuthContext)
   const { comments } = comment
+  const { ui, uiDispatch } = useContext(AuthContext)
   const { loading } = ui
 
   useEffect(() => {

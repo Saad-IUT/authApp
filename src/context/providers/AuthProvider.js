@@ -1,10 +1,13 @@
 import React, { useReducer } from 'react'
-import BlogReducer from '../reducers/BlogReducer'
-import UIReducer from '../reducers/UIReducer'
-import UserReducer from '../reducers/UserReducer'
+import BlogReducer from '../reducers/dataReducer'
+import UIReducer from '../reducers/uiReducer'
+import UserReducer from '../reducers/userReducer'
 const AuthContext = React.createContext()
 
 const AuthProvider = ({ children }) => {
+  const [blog, blogDispatch] = useReducer(BlogReducer, [], () => {
+    return { blogs: [] }
+  })
   const [comment, commentDispatch] = useReducer(BlogReducer, [], () => {
     return { comments: [] }
   })
@@ -14,15 +17,22 @@ const AuthProvider = ({ children }) => {
   const [auth, authDispatch] = useReducer(UserReducer, [], () => {
     return { authenticated: false }
   })
+  const [user, userDispatch] = useReducer(UserReducer, [], () => {
+    return { credentials: [] }
+  })
   return (
     <AuthContext.Provider
       value={{
         comment,
         commentDispatch,
+        blog,
+        blogDispatch,
         ui,
         uiDispatch,
         auth,
         authDispatch,
+        user,
+        userDispatch,
       }}
     >
       {children}

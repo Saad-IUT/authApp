@@ -1,39 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { View, FlatList, ActivityIndicator } from 'react-native'
 import { Card, Button, Input } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
-import axios from 'axios'
 import { useNetInfo } from '@react-native-community/netinfo'
-import { handlePost } from '../context/actions/userActions'
+import { handlePost } from '../context/actions/dataActions'
+import { getPost } from '../context/actions/dataActions'
 import { storeData } from '../functions/AsyncStorage'
+import { AuthContext } from '../context/providers/AuthProvider'
 const HomeScreen = ({ navigation }) => {
   const netInfo = useNetInfo()
   if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
     alert('No Internet!')
   }
 
-  const [newPost, setNewPost] = useState('')
-  const [post, setPost] = useState([])
-  const [loading, setLoading] = useState(false)
+  const { ui, uiDispatch } = useContext(AuthContext)
+  const { blog, blogDispatch } = useContext(AuthContext)
 
-  const getPost = async () => {
-    setLoading(true)
-    await axios
-      .get('/blogs')
-      .then(res => {
-        setPost(res.data)
-        setLoading(false)
-      })
-      .catch(err => {
-        console.error(err.response)
-      })
-  }
+  const { loading } = ui
+  const { blogs } = blog
 
   useEffect(() => {
-    getPost()
+    getPost(uiDispatch, blogDispatch)
   }, [])
 
   return (
@@ -47,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
             storeData('post', currentInput)
           }}
         />
-        <Button title='Post' type='outline' onPress={handlePost} />
+        <Button title='Post' type='outline' onPress={() => handlePost()} />
       </Card>
       {loading ? (
         <Card>
@@ -55,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
         </Card>
       ) : (
         <FlatList
-          data={post}
+          data={blogs}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => {
             return (
