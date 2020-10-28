@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles/global'
 import { signUp } from '../context/actions/userActions'
+import { StoreContext } from '../context/store'
 
 const SignUpScreen = ({ navigation }) => {
   const [handle, setHandle] = useState('')
@@ -11,13 +12,21 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const { ui, uiDispatch } = useContext(StoreContext)
+  const { loading } = ui
 
   const handleSubmit = () => {
     setDisabled(true)
-    signUp(handle, studentId, email, password, confirmPassword, navigation)
-    setLoading(true)
+    signUp(
+      handle,
+      studentId,
+      email,
+      password,
+      confirmPassword,
+      navigation,
+      uiDispatch
+    )
   }
 
   return (

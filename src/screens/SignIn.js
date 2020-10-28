@@ -9,9 +9,10 @@ import { signIn } from '../context/actions/userActions'
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const { auth, authDispatch } = useContext(StoreContext)
+  const { ui, uiDispatch } = useContext(StoreContext)
+  const { loading } = ui
 
   return (
     <View style={globalStyles.authViewStyle}>
@@ -50,8 +51,7 @@ const SignInScreen = ({ navigation }) => {
               title='  Sign In!'
               onPress={() => {
                 setDisabled(true)
-                signIn(email, password, authDispatch)
-                setLoading(true)
+                signIn(email, password, authDispatch, uiDispatch)
               }}
             />
             <Button

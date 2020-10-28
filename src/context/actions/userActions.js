@@ -15,8 +15,10 @@ export const signUp = (
   email,
   password,
   confirmPassword,
-  navigation
+  navigation,
+  uiDispatch
 ) => {
+  uiDispatch({ type: LOADING_UI })
   axios
     .post('/signup', {
       handle,
@@ -27,13 +29,16 @@ export const signUp = (
     })
     .then(() => {
       navigation.navigate('SignIn')
+      uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
+      uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })
 }
 
-export const signIn = (email, password, dispatch) => {
+export const signIn = (email, password, authDispatch, uiDispatch) => {
+  uiDispatch({ type: LOADING_UI })
   axios
     .post('/login', {
       email,
@@ -41,9 +46,11 @@ export const signIn = (email, password, dispatch) => {
     })
     .then(res => {
       setAuthorizationHeader(res.data.token)
-      dispatch({ type: SET_AUTHENTICATED })
+      authDispatch({ type: SET_AUTHENTICATED })
+      uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
+      uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })
 }
