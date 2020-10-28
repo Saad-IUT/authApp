@@ -12,12 +12,10 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [disabled, setDisabled] = useState(false)
   const { ui, uiDispatch } = useContext(StoreContext)
-  const { loading } = ui
+  const { loading, disable } = ui
 
   const handleSubmit = () => {
-    setDisabled(true)
     signUp(
       handle,
       studentId,
@@ -40,7 +38,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setHandle(currentInput)
           }}
-          disabled={disabled}
+          disabled={disable}
         />
         <Input
           leftIcon={<Ionicons name='ios-school' size={24} color='black' />}
@@ -48,7 +46,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setStudentId(currentInput)
           }}
-          disabled={disabled}
+          disabled={disable}
         />
         <Input
           leftIcon={<FontAwesome name='envelope' size={24} color='black' />}
@@ -56,7 +54,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setEmail(currentInput)
           }}
-          disabled={disabled}
+          disabled={disable}
         />
         <Input
           placeholder='Password'
@@ -65,7 +63,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setPassword(currentInput)
           }}
-          disabled={disabled}
+          disabled={disable}
         />
         <Input
           placeholder='Confirm Password'
@@ -74,7 +72,7 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={currentInput => {
             setConfirmPassword(currentInput)
           }}
-          disabled={disabled}
+          disabled={disable}
         />
         {loading ? (
           <Button

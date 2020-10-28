@@ -7,6 +7,8 @@ import {
   STOP_LOADING_UI,
   SET_AUTH_USER,
   SET_USER,
+  DISABLE_INPUT,
+  ENABLE_INPUT,
 } from '../types'
 
 export const signUp = (
@@ -18,6 +20,7 @@ export const signUp = (
   navigation,
   uiDispatch
 ) => {
+  uiDispatch({ type: DISABLE_INPUT })
   uiDispatch({ type: LOADING_UI })
   axios
     .post('/signup', {
@@ -32,12 +35,14 @@ export const signUp = (
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
+      uiDispatch({ type: ENABLE_INPUT })
       uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })
 }
 
 export const signIn = (email, password, authDispatch, uiDispatch) => {
+  uiDispatch({ type: DISABLE_INPUT })
   uiDispatch({ type: LOADING_UI })
   axios
     .post('/login', {
@@ -50,6 +55,7 @@ export const signIn = (email, password, authDispatch, uiDispatch) => {
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
+      uiDispatch({ type: ENABLE_INPUT })
       uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })

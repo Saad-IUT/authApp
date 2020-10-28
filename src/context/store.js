@@ -12,7 +12,7 @@ const Store = ({ children }) => {
     return { comments: [] }
   })
   const [ui, uiDispatch] = useReducer(UIReducer, [], () => {
-    return { loading: false }
+    return { loading: false, disable: false }
   })
   const [auth, authDispatch] = useReducer(UserReducer, [], () => {
     return { authenticated: false }

@@ -4,6 +4,8 @@ export const SET_BLOGS = 'SET_BLOGS'
 //UI types
 export const LOADING_UI = 'LOADING_UI'
 export const STOP_LOADING_UI = 'STOP_LOADING_UI'
+export const DISABLE_INPUT = 'DISABLE_INPUT'
+export const ENABLE_INPUT = 'ENABLE_INPUT'
 //User types
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED'
 export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED'
