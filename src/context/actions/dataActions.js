@@ -15,6 +15,7 @@ export const handleComment = async blogId => {
     })
   removeData('comment')
 }
+
 export const handlePost = async () => {
   const post = await getData('post')
   axios
@@ -28,6 +29,7 @@ export const handlePost = async () => {
     })
   removeData('post')
 }
+
 export const getPost = (uiDispatch, blogsDispatch) => {
   uiDispatch({ type: LOADING_UI })
   axios

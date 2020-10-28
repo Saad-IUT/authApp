@@ -9,15 +9,15 @@ import { useNetInfo } from '@react-native-community/netinfo'
 import { handlePost } from '../context/actions/dataActions'
 import { getPost } from '../context/actions/dataActions'
 import { storeData } from '../functions/AsyncStorage'
-import { AuthContext } from '../context/providers/AuthProvider'
+import { StoreContext } from '../context/store'
 const HomeScreen = ({ navigation }) => {
   const netInfo = useNetInfo()
   if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
     alert('No Internet!')
   }
 
-  const { ui, uiDispatch } = useContext(AuthContext)
-  const { blog, blogDispatch } = useContext(AuthContext)
+  const { ui, uiDispatch } = useContext(StoreContext)
+  const { blog, blogDispatch } = useContext(StoreContext)
 
   const { loading } = ui
   const { blogs } = blog

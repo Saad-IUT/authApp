@@ -1,18 +1,18 @@
 import React, { useContext, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import AuthStackScreen from './src/routes/AuthStack'
-import { AuthContext, AuthProvider } from './src/context/providers/AuthProvider'
+import { StoreContext, Store } from './src/context/store'
 import AppDrawerScreen from './src/routes/AppDrawer'
 import axios from 'axios'
 import { getData } from './src/functions/AsyncStorage'
 import jwtDecode from 'jwt-decode'
-import { SET_AUTHENTICATED, SET_UNAUTHENTICATED } from './src/context/types'
+import { SET_AUTHENTICATED } from './src/context/types'
 import { logoutUser } from './src/context/actions/userActions'
 
 axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 
 const AppStart = () => {
-  const { auth, authDispatch } = useContext(AuthContext)
+  const { auth, authDispatch } = useContext(StoreContext)
   const { authenticated } = auth
   const getAuth = async () => {
     const token = await getData('FBIdToken')
@@ -37,9 +37,9 @@ const AppStart = () => {
 
 const App = () => {
   return (
-    <AuthProvider>
+    <Store>
       <AppStart />
-    </AuthProvider>
+    </Store>
   )
 }
 

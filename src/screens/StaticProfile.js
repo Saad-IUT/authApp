@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
-import { AuthContext } from '../context/providers/AuthProvider'
+import { StoreContext } from '../context/store'
 import globalStyles from '../styles/global'
 import axios from 'axios'
 
@@ -29,7 +29,7 @@ const StaticProfileScreen = ({ navigation, route }) => {
   }, [])
 
   return (
-    <AuthContext.Consumer>
+    <StoreContext.Consumer>
       {auth => (
         <View>
           <NavBar navigation={navigation} />
@@ -68,7 +68,7 @@ const StaticProfileScreen = ({ navigation, route }) => {
           </Card>
         </View>
       )}
-    </AuthContext.Consumer>
+    </StoreContext.Consumer>
   )
 }
 

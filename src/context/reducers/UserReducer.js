@@ -1,4 +1,4 @@
-import { SET_AUTHENTICATED, SET_UNAUTHENTICATED,SET_USER } from '../types'
+import { SET_AUTHENTICATED, SET_UNAUTHENTICATED, SET_USER } from '../types'
 export default function (state, actions) {
   switch (actions.type) {
     case SET_AUTHENTICATED:

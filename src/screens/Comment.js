@@ -8,13 +8,13 @@ import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
 import { handleComment } from '../context/actions/dataActions'
 import { storeData } from '../functions/AsyncStorage'
-import { AuthContext } from '../context/providers/AuthProvider'
+import { StoreContext } from '../context/store'
 import { getOneBlog } from '../context/actions/dataActions'
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
-  const { comment, commentDispatch } = useContext(AuthContext)
+  const { comment, commentDispatch } = useContext(StoreContext)
   const { comments } = comment
-  const { ui, uiDispatch } = useContext(AuthContext)
+  const { ui, uiDispatch } = useContext(StoreContext)
   const { loading } = ui
 
   useEffect(() => {
