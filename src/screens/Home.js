@@ -17,13 +17,13 @@ const HomeScreen = ({ navigation }) => {
   }
 
   const { ui, uiDispatch } = useContext(StoreContext)
-  const { blog, blogDispatch } = useContext(StoreContext)
+  const { data, dataDispatch } = useContext(StoreContext)
 
   const { loading } = ui
-  const { blogs } = blog
+  const { blogs } = data
 
   useEffect(() => {
-    getPost(uiDispatch, blogDispatch)
+    getPost(uiDispatch, dataDispatch)
   }, [])
 
   return (

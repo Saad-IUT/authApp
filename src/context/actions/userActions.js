@@ -31,6 +31,7 @@ export const signUp = (
       confirmPassword,
     })
     .then(() => {
+      uiDispatch({ type: ENABLE_INPUT })
       navigation.navigate('SignIn')
       uiDispatch({ type: STOP_LOADING_UI })
     })
@@ -41,7 +42,7 @@ export const signUp = (
     })
 }
 
-export const signIn = (email, password, authDispatch, uiDispatch) => {
+export const signIn = (email, password, userDispatch, uiDispatch) => {
   uiDispatch({ type: DISABLE_INPUT })
   uiDispatch({ type: LOADING_UI })
   axios
@@ -50,8 +51,9 @@ export const signIn = (email, password, authDispatch, uiDispatch) => {
       password,
     })
     .then(res => {
+      uiDispatch({ type: ENABLE_INPUT })
       setAuthorizationHeader(res.data.token)
-      authDispatch({ type: SET_AUTHENTICATED })
+      userDispatch({ type: SET_AUTHENTICATED })
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
@@ -61,12 +63,12 @@ export const signIn = (email, password, authDispatch, uiDispatch) => {
     })
 }
 
-export const getAuthUser = (uiDispatch, authUserDispatch) => {
+export const getAuthUser = (uiDispatch, userDispatch) => {
   uiDispatch({ type: LOADING_UI })
   axios
     .get('/user/me')
     .then(res => {
-      authUserDispatch({ type: SET_AUTH_USER, payload: res.data.credentials })
+      userDispatch({ type: SET_AUTH_USER, payload: res.data.credentials })
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {

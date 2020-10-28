@@ -44,12 +44,12 @@ export const getPost = (uiDispatch, blogsDispatch) => {
     })
 }
 
-export const getOneBlog = (blogId, commentDispatch, uiDispatch) => {
+export const getOneBlog = (blogId, dataDispatch, uiDispatch) => {
   uiDispatch({ type: LOADING_UI })
   axios
     .get(`/blog/${blogId}`)
     .then(res => {
-      commentDispatch({ type: SET_COMMENT, payload: res.data.comments })
+      dataDispatch({ type: SET_COMMENT, payload: res.data.comments })
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {

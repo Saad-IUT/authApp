@@ -12,13 +12,13 @@ import { StoreContext } from '../context/store'
 import { getOneBlog } from '../context/actions/dataActions'
 const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
-  const { comment, commentDispatch } = useContext(StoreContext)
-  const { comments } = comment
+  const { data, dataDispatch } = useContext(StoreContext)
+  const { comments } = data
   const { ui, uiDispatch } = useContext(StoreContext)
   const { loading } = ui
 
   useEffect(() => {
-    getOneBlog(blogId, commentDispatch, uiDispatch)
+    getOneBlog(blogId, dataDispatch, uiDispatch)
   }, [blogId])
 
   return (

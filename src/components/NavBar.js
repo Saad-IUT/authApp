@@ -3,7 +3,7 @@ import { Header } from 'react-native-elements'
 import { logoutUser } from '../context/actions/userActions'
 import { StoreContext } from '../context/store'
 const NavBar = ({ navigation }) => {
-  const { auth, authDispatch } = useContext(StoreContext)
+  const { user, userDispatch } = useContext(StoreContext)
   return (
     <Header
       leftComponent={{
@@ -18,8 +18,8 @@ const NavBar = ({ navigation }) => {
         icon: 'lock-outline',
         color: '#fff',
         onPress: () => {
-          logoutUser(authDispatch)
-          // authDispatch({ type: SET_UNAUTHENTICATED })
+          logoutUser(userDispatch)
+          // userDispatch({ type: SET_UNAUTHENTICATED })
         },
       }}
     />

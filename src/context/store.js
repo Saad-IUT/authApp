@@ -5,37 +5,22 @@ import UserReducer from './reducers/userReducer'
 const StoreContext = React.createContext()
 
 const Store = ({ children }) => {
-  const [blog, blogDispatch] = useReducer(DataReducer, [], () => {
-    return { blogs: [] }
-  })
-  const [comment, commentDispatch] = useReducer(DataReducer, [], () => {
-    return { comments: [] }
+  const [data, dataDispatch] = useReducer(DataReducer, [], () => {
+    return { blogs: [], comments: [] }
   })
   const [ui, uiDispatch] = useReducer(UIReducer, [], () => {
     return { loading: false, disable: false }
   })
-  const [auth, authDispatch] = useReducer(UserReducer, [], () => {
-    return { authenticated: false }
-  })
-  const [authUser, authUserDispatch] = useReducer(UserReducer, [], () => {
-    return { credentials: [] }
-  })
   const [user, userDispatch] = useReducer(UserReducer, [], () => {
-    return { userData: [] }
+    return { authenticated: false, credentials: [], userData: [] }
   })
   return (
     <StoreContext.Provider
       value={{
-        comment,
-        commentDispatch,
-        blog,
-        blogDispatch,
+        data,
+        dataDispatch,
         ui,
         uiDispatch,
-        auth,
-        authDispatch,
-        authUser,
-        authUserDispatch,
         user,
         userDispatch,
       }}

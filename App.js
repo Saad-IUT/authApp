@@ -12,16 +12,16 @@ import { logoutUser } from './src/context/actions/userActions'
 axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 
 const AppStart = () => {
-  const { auth, authDispatch } = useContext(StoreContext)
-  const { authenticated } = auth
+  const { user, userDispatch } = useContext(StoreContext)
+  const { authenticated } = user
   const getAuth = async () => {
     const token = await getData('FBIdToken')
     if (token) {
       const decodedToken = jwtDecode(token)
       if (decodedToken.exp * 1000 < Date.now()) {
-        logoutUser(authDispatch)
+        logoutUser(userDispatch)
       } else {
-        authDispatch({ type: SET_AUTHENTICATED })
+        userDispatch({ type: SET_AUTHENTICATED })
       }
     }
   }
