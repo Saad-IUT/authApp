@@ -39,6 +39,7 @@ export const getPost = (uiDispatch, blogsDispatch) => {
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
+      uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })
 }
@@ -51,5 +52,8 @@ export const getOneBlog = (blogId, commentDispatch, uiDispatch) => {
       commentDispatch({ type: SET_COMMENT, payload: res.data.comments })
       uiDispatch({ type: STOP_LOADING_UI })
     })
-    .catch(err => console.error(err.response))
+    .catch(err => {
+      uiDispatch({ type: STOP_LOADING_UI })
+      console.error(err.response)
+    })
 }

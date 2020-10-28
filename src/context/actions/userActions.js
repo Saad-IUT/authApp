@@ -5,6 +5,7 @@ import {
   SET_UNAUTHENTICATED,
   LOADING_UI,
   STOP_LOADING_UI,
+  SET_AUTH_USER,
   SET_USER,
 } from '../types'
 
@@ -47,15 +48,30 @@ export const signIn = (email, password, dispatch) => {
     })
 }
 
-export const getAuthUser = (uiDispatch, userDispatch) => {
+export const getAuthUser = (uiDispatch, authUserDispatch) => {
   uiDispatch({ type: LOADING_UI })
   axios
     .get('/user/me')
     .then(res => {
-      userDispatch({ type: SET_USER, payload: res.data.credentials })
+      authUserDispatch({ type: SET_AUTH_USER, payload: res.data.credentials })
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
+      uiDispatch({ type: STOP_LOADING_UI })
+      console.error(err.response)
+    })
+}
+
+export const getUser = (uiDispatch, userDispatch, name) => {
+  uiDispatch({ type: LOADING_UI })
+  axios
+    .get(`/user/${name}`)
+    .then(res => {
+      userDispatch({ type: SET_USER, payload: res.data })
+      uiDispatch({ type: STOP_LOADING_UI })
+    })
+    .catch(err => {
+      uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })
 }

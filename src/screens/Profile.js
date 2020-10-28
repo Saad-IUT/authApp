@@ -8,13 +8,13 @@ import { FontAwesome } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import { getAuthUser } from '../context/actions/userActions'
 const ProfileScreen = ({ navigation }) => {
-  const { user, userDispatch } = useContext(StoreContext)
-  const { credentials } = user
+  const { authUser, authUserDispatch } = useContext(StoreContext)
+  const { credentials } = authUser
   const { ui, uiDispatch } = useContext(StoreContext)
   const { loading } = ui
 
   useEffect(() => {
-    getAuthUser(uiDispatch, userDispatch)
+    getAuthUser(uiDispatch, authUserDispatch)
   }, [])
 
   return (

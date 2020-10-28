@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
             storeData('post', currentInput)
           }}
         />
-        <Button title='Post' type='outline' onPress={() => handlePost()} />
+        <Button title='Post' type='outline' onPress={handlePost} />
       </Card>
       {loading ? (
         <Card>

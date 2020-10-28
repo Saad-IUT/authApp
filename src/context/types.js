@@ -7,4 +7,5 @@ export const STOP_LOADING_UI = 'STOP_LOADING_UI'
 //User types
 export const SET_AUTHENTICATED = 'SET_AUTHENTICATED'
 export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED'
+export const SET_AUTH_USER = 'SET_AUTH_USER'
 export const SET_USER = 'SET_USER'
