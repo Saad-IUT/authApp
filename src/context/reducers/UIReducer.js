@@ -20,11 +20,13 @@ export default (state, actions) => {
       return {
         ...state,
         disable: true,
+        loading: true,
       }
     case ENABLE_INPUT:
       return {
         ...state,
         disable: false,
+        loading: false,
       }
     default:
       return state

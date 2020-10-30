@@ -30,12 +30,12 @@ export const handlePost = async () => {
   removeData('post')
 }
 
-export const getPost = (uiDispatch, blogsDispatch) => {
+export const getPost = (uiDispatch, dataDispatch) => {
   uiDispatch({ type: LOADING_UI })
   axios
     .get('/blogs')
     .then(res => {
-      blogsDispatch({ type: SET_BLOGS, payload: res.data })
+      dataDispatch({ type: SET_BLOGS, payload: res.data })
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {

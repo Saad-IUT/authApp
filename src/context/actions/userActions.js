@@ -18,10 +18,10 @@ export const signUp = (
   password,
   confirmPassword,
   navigation,
-  uiDispatch
+  dispatch
 ) => {
-  uiDispatch({ type: DISABLE_INPUT })
-  uiDispatch({ type: LOADING_UI })
+  dispatch({ type: DISABLE_INPUT })
+  // uiDispatch({ type: LOADING_UI })
   axios
     .post('/signup', {
       handle,
@@ -31,34 +31,34 @@ export const signUp = (
       confirmPassword,
     })
     .then(() => {
-      uiDispatch({ type: ENABLE_INPUT })
       navigation.navigate('SignIn')
-      uiDispatch({ type: STOP_LOADING_UI })
+      dispatch({ type: ENABLE_INPUT })
+      // uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
-      uiDispatch({ type: ENABLE_INPUT })
-      uiDispatch({ type: STOP_LOADING_UI })
+      dispatch({ type: ENABLE_INPUT })
+      // uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })
 }
 
 export const signIn = (email, password, userDispatch, uiDispatch) => {
   uiDispatch({ type: DISABLE_INPUT })
-  uiDispatch({ type: LOADING_UI })
+  // uiDispatch({ type: LOADING_UI })
   axios
     .post('/login', {
       email,
       password,
     })
     .then(res => {
-      uiDispatch({ type: ENABLE_INPUT })
       setAuthorizationHeader(res.data.token)
       userDispatch({ type: SET_AUTHENTICATED })
-      uiDispatch({ type: STOP_LOADING_UI })
+      uiDispatch({ type: ENABLE_INPUT })
+      // uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
       uiDispatch({ type: ENABLE_INPUT })
-      uiDispatch({ type: STOP_LOADING_UI })
+      // uiDispatch({ type: STOP_LOADING_UI })
       console.error(err.response)
     })
 }
