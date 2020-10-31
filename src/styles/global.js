@@ -14,4 +14,10 @@ export default StyleSheet.create({
     color: 'darkblue',
     paddingVertical: 10,
   },
+  errorTextStyle: {
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: 8,
+    marginTop: -8,
+  },
 })

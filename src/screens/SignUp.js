@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, View, Text } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles/global'
@@ -13,7 +13,7 @@ const SignUpScreen = ({ navigation }) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const { ui, uiDispatch } = useContext(StoreContext)
-  const { loading, disable } = ui
+  const { loading, disable, errors } = ui
 
   const handleSubmit = () => {
     signUp(
@@ -40,6 +40,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.handle}</Text>
+        ) : null}
         <Input
           leftIcon={<Ionicons name='ios-school' size={24} color='black' />}
           placeholder='Student ID'
@@ -48,6 +51,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.studentId}</Text>
+        ) : null}
         <Input
           leftIcon={<FontAwesome name='envelope' size={24} color='black' />}
           placeholder='E-mail Address'
@@ -56,6 +62,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
+        ) : null}
         <Input
           placeholder='Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -65,6 +74,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.password}</Text>
+        ) : null}
         <Input
           placeholder='Confirm Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -74,6 +86,11 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>
+            {errors.confirmPassword}
+          </Text>
+        ) : null}
         {loading ? (
           <Button
             icon={

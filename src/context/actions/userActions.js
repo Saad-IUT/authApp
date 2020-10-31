@@ -9,6 +9,8 @@ import {
   SET_USER,
   DISABLE_INPUT,
   ENABLE_INPUT,
+  SET_ERRORS,
+  CLEAR_ERRORS,
 } from '../types'
 
 export const signUp = (
@@ -38,8 +40,9 @@ export const signUp = (
     .catch(err => {
       dispatch({ type: ENABLE_INPUT })
       // uiDispatch({ type: STOP_LOADING_UI })
-      console.error(err.response)
+      dispatch({ type: SET_ERRORS, payload: err.response.data })
     })
+  dispatch({ type: CLEAR_ERRORS })
 }
 
 export const signIn = (email, password, userDispatch, uiDispatch) => {
@@ -58,9 +61,9 @@ export const signIn = (email, password, userDispatch, uiDispatch) => {
     })
     .catch(err => {
       uiDispatch({ type: ENABLE_INPUT })
-      // uiDispatch({ type: STOP_LOADING_UI })
-      console.error(err.response)
+      uiDispatch({ type: SET_ERRORS, payload: err.response.data })
     })
+  uiDispatch({ type: CLEAR_ERRORS })
 }
 
 export const getAuthUser = (uiDispatch, userDispatch) => {

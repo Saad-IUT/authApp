@@ -9,7 +9,7 @@ const Store = ({ children }) => {
     return { blogs: [], comments: [] }
   })
   const [ui, uiDispatch] = useReducer(UIReducer, [], () => {
-    return { loading: false, disable: false }
+    return { loading: false, disable: false, errors: null }
   })
   const [user, userDispatch] = useReducer(UserReducer, [], () => {
     return { authenticated: false, credentials: [], userData: [] }

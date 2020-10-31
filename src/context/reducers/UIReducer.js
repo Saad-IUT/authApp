@@ -3,9 +3,21 @@ import {
   STOP_LOADING_UI,
   DISABLE_INPUT,
   ENABLE_INPUT,
+  SET_ERRORS,
+  CLEAR_ERRORS,
 } from '../types'
-export default (state, actions) => {
-  switch (actions.type) {
+export default (state, action) => {
+  switch (action.type) {
+    case SET_ERRORS:
+      return {
+        ...state,
+        errors: action.payload,
+      }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        errors: null,
+      }
     case LOADING_UI:
       return {
         ...state,

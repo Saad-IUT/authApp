@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native'
 import { Card, Button, Text, Avatar } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'
 import dayjs from 'dayjs'
-
+import axios from 'axios'
 const PostCard = ({
   navigation,
   blogId,
@@ -13,6 +13,16 @@ const PostCard = ({
   commentCount,
   likeCount,
 }) => {
+  const handleLike = () => {
+    axios
+      .get(`/blog/${blogId}/like`)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => {
+        alert(err.response.data.error)
+      })
+  }
   return (
     <Card>
       <View
@@ -53,6 +63,7 @@ const PostCard = ({
           type='outline'
           title={`  Like (${likeCount})`}
           icon={<AntDesign name='like2' size={24} color='dodgerblue' />}
+          onPress={handleLike}
         />
         <Button
           title={`Comment (${commentCount})`}

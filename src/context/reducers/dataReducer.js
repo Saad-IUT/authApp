@@ -1,12 +1,12 @@
 import { SET_COMMENT, SET_BLOGS } from '../types'
-export default (state, actions) => {
-  switch (actions.type) {
+export default (state, action) => {
+  switch (action.type) {
     case SET_COMMENT:
-      return { ...state, comments: actions.payload }
+      return { ...state, comments: action.payload }
     case SET_BLOGS:
       return {
         ...state,
-        blogs: actions.payload,
+        blogs: action.payload,
       }
     default:
       return state

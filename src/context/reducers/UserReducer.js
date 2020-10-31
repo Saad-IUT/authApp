@@ -4,8 +4,8 @@ import {
   SET_AUTH_USER,
   SET_USER,
 } from '../types'
-export default (state, actions) => {
-  switch (actions.type) {
+export default (state, action) => {
+  switch (action.type) {
     case SET_AUTHENTICATED:
       return {
         ...state,
@@ -17,9 +17,9 @@ export default (state, actions) => {
         authenticated: false,
       }
     case SET_AUTH_USER:
-      return { ...state, credentials: actions.payload }
+      return { ...state, credentials: action.payload }
     case SET_USER:
-      return { ...state, userData: actions.payload }
+      return { ...state, userData: action.payload }
     default:
       return state
   }

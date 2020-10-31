@@ -8,12 +8,22 @@ import { getData } from './src/functions/AsyncStorage'
 import jwtDecode from 'jwt-decode'
 import { SET_AUTHENTICATED } from './src/context/types'
 import { logoutUser } from './src/context/actions/userActions'
+import AsyncStorage from '@react-native-community/async-storage'
 
 axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 
 const AppStart = () => {
   const { user, userDispatch } = useContext(StoreContext)
   const { authenticated } = user
+  // AsyncStorage.clear()
+  // AsyncStorage.getAllKeys((err, keys) => {
+  //   AsyncStorage.multiGet(keys, (error, stores) => {
+  //     stores.map((result, i, store) => {
+  //       console.log({ [store[i][0]]: store[i][1] })
+  //       return true
+  //     })
+  //   })
+  // })
   const getAuth = async () => {
     const token = await getData('FBIdToken')
     if (token) {

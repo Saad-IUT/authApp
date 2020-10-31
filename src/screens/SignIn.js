@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, View, Text } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
 import { StoreContext } from '../context/store'
@@ -11,7 +11,7 @@ const SignInScreen = ({ navigation }) => {
   const [password, setPassword] = useState('')
   const { user, userDispatch } = useContext(StoreContext)
   const { ui, uiDispatch } = useContext(StoreContext)
-  const { loading, disable } = ui
+  const { loading, disable, errors } = ui
 
   return (
     <View style={globalStyles.authViewStyle}>
@@ -26,7 +26,9 @@ const SignInScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
+        ) : null}
         <Input
           placeholder='Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -36,6 +38,12 @@ const SignInScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>
+            {errors.password}
+            {errors.general}
+          </Text>
+        ) : null}
         {loading ? (
           <Button
             icon={
