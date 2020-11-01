@@ -6,7 +6,7 @@ const StoreContext = React.createContext()
 
 const Store = ({ children }) => {
   const [data, dataDispatch] = useReducer(DataReducer, [], () => {
-    return { blogs: [], comments: [] }
+    return { blogs: [], comments: [], liked: [] }
   })
   const [ui, uiDispatch] = useReducer(UIReducer, [], () => {
     return { loading: false, disable: false, errors: null }

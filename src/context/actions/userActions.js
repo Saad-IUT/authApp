@@ -11,6 +11,7 @@ import {
   ENABLE_INPUT,
   SET_ERRORS,
   CLEAR_ERRORS,
+  LIKE_SCREAM,
 } from '../types'
 
 export const signUp = (
@@ -45,7 +46,13 @@ export const signUp = (
   dispatch({ type: CLEAR_ERRORS })
 }
 
-export const signIn = (email, password, userDispatch, uiDispatch) => {
+export const signIn = (
+  email,
+  password,
+  userDispatch,
+  uiDispatch,
+  dataDispatch
+) => {
   uiDispatch({ type: DISABLE_INPUT })
   // uiDispatch({ type: LOADING_UI })
   axios
@@ -57,6 +64,7 @@ export const signIn = (email, password, userDispatch, uiDispatch) => {
       setAuthorizationHeader(res.data.token)
       userDispatch({ type: SET_AUTHENTICATED })
       uiDispatch({ type: ENABLE_INPUT })
+      getAuthUser(uiDispatch, userDispatch, dataDispatch)
       // uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
@@ -66,11 +74,12 @@ export const signIn = (email, password, userDispatch, uiDispatch) => {
   uiDispatch({ type: CLEAR_ERRORS })
 }
 
-export const getAuthUser = (uiDispatch, userDispatch) => {
+export const getAuthUser = (uiDispatch, userDispatch, dataDispatch) => {
   uiDispatch({ type: LOADING_UI })
   axios
     .get('/user/me')
     .then(res => {
+      dataDispatch({ type: LIKE_SCREAM, payload: res.data.likes })
       userDispatch({ type: SET_AUTH_USER, payload: res.data.credentials })
       uiDispatch({ type: STOP_LOADING_UI })
     })

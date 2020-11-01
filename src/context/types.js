@@ -1,6 +1,7 @@
 //Data types
 export const SET_COMMENT = 'SET_COMMENT'
 export const SET_BLOGS = 'SET_BLOGS'
+export const LIKE_SCREAM = 'LIKE_SCREAM'
 //UI types
 export const SET_ERRORS = 'SET_ERRORS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'

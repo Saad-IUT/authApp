@@ -1,5 +1,11 @@
 import React, { useEffect, useContext } from 'react'
-import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Button,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
 import { StoreContext } from '../context/store'
@@ -35,7 +41,7 @@ const ProfileScreen = ({ navigation }) => {
         />
         <TouchableOpacity
           onPress={() => {
-            console.log('image')
+            console.log('image upload')
           }}
         >
           <FontAwesome
@@ -66,15 +72,27 @@ const ProfileScreen = ({ navigation }) => {
                 }}
                 h4
               >
-                About
+                {credentials.handle}
               </Text>
-              <TouchableOpacity onPress={() => console.log('edit it')}>
+              <TouchableOpacity onPress={() => console.log('edit details')}>
                 <AntDesign name='edit' size={28} color='pink' />
               </TouchableOpacity>
             </View>
-            <Text style={globalStyles.textStyle}>
-              Name : {credentials.handle}
-            </Text>
+            <Pressable
+              onLongPress={() => {
+                console.log('Are you sure?')
+              }}
+            >
+              <Text
+                style={{
+                  backgroundColor: '#E60023',
+                  textAlign: 'center',
+                  padding: 10,
+                }}
+              >
+                Delete Profile
+              </Text>
+            </Pressable>
             <Text style={globalStyles.textStyle}>
               Born on : {credentials.dob}
             </Text>

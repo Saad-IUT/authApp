@@ -21,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
 
   const { loading } = ui
   const { blogs } = data
-
+  
   useEffect(() => {
     getPost(uiDispatch, dataDispatch)
   }, [])

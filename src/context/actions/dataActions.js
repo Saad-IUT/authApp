@@ -7,7 +7,7 @@ export const handleComment = async blogId => {
   axios
     .post(`/blog/${blogId}/comment`, { body: comment })
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       alert('Commented successfully!!')
     })
     .catch(err => {
@@ -21,7 +21,7 @@ export const handlePost = async () => {
   axios
     .post('/blog', { body: post })
     .then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       alert('Posted successfully!!')
     })
     .catch(err => {

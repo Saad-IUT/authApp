@@ -11,6 +11,7 @@ const SignInScreen = ({ navigation }) => {
   const [password, setPassword] = useState('')
   const { user, userDispatch } = useContext(StoreContext)
   const { ui, uiDispatch } = useContext(StoreContext)
+  const { data, dataDispatch } = useContext(StoreContext)
   const { loading, disable, errors } = ui
 
   return (
@@ -57,7 +58,7 @@ const SignInScreen = ({ navigation }) => {
               icon={<AntDesign name='login' size={24} color='white' />}
               title='  Sign In!'
               onPress={() => {
-                signIn(email, password, userDispatch, uiDispatch)
+                signIn(email, password, userDispatch, uiDispatch, dataDispatch)
               }}
             />
             <Button
