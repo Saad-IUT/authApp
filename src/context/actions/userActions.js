@@ -64,7 +64,7 @@ export const signIn = (
       setAuthorizationHeader(res.data.token)
       userDispatch({ type: SET_AUTHENTICATED })
       uiDispatch({ type: ENABLE_INPUT })
-      getAuthUser(uiDispatch, userDispatch, dataDispatch)
+      getLikes(dataDispatch)
       // uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
@@ -74,17 +74,27 @@ export const signIn = (
   uiDispatch({ type: CLEAR_ERRORS })
 }
 
-export const getAuthUser = (uiDispatch, userDispatch, dataDispatch) => {
+export const getAuthUser = (uiDispatch, userDispatch) => {
   uiDispatch({ type: LOADING_UI })
   axios
     .get('/user/me')
     .then(res => {
-      dataDispatch({ type: LIKE_SCREAM, payload: res.data.likes })
       userDispatch({ type: SET_AUTH_USER, payload: res.data.credentials })
       uiDispatch({ type: STOP_LOADING_UI })
     })
     .catch(err => {
       uiDispatch({ type: STOP_LOADING_UI })
+      console.error(err.response)
+    })
+}
+
+export const getLikes = dispatch => {
+  axios
+    .get('/user/me')
+    .then(res => {
+      dispatch({ type: LIKE_SCREAM, payload: res.data.likes })
+    })
+    .catch(err => {
       console.error(err.response)
     })
 }

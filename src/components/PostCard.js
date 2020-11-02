@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons'
 import dayjs from 'dayjs'
 import axios from 'axios'
 import { StoreContext } from '../context/store'
+
 const PostCard = ({
   navigation,
   blogId,
@@ -14,22 +15,37 @@ const PostCard = ({
   commentCount,
   likeCount,
 }) => {
+
   const { data, dataDispatch } = useContext(StoreContext)
   const { liked } = data
+
   let likedBlogs = []
   liked.forEach(like => {
     likedBlogs.push(like.blogId)
   })
+
   const handleLike = () => {
     axios
       .get(`/blog/${blogId}/like`)
       .then(res => {
-        // console.log(res.data)
+        alert('Liked!!')
       })
       .catch(err => {
         alert(err.response.data.error)
       })
   }
+
+  const handleUnlike = () => {
+    axios
+      .get(`/blog/${blogId}/unlike`)
+      .then(res => {
+        alert('Unliked!!')
+      })
+      .catch(err => {
+        alert(err.response.data.error)
+      })
+  }
+
   return (
     <Card>
       <View
@@ -77,8 +93,8 @@ const PostCard = ({
           <Button
             type='outline'
             title={`  Like (${likeCount})`}
-            icon={<AntDesign name='like2' size={24} color='red' />}
-            onPress={handleLike}
+            icon={<AntDesign name='like1' size={24} color='dodgerblue' />}
+            onPress={handleUnlike}
           />
         )}
         <Button
