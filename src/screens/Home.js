@@ -1,5 +1,12 @@
-import React, { useContext, useEffect } from 'react'
-import { View, FlatList, ActivityIndicator } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import {
+  View,
+  FlatList,
+  ActivityIndicator,
+  ScrollView,
+  RefreshControl,
+  SafeAreaView,
+} from 'react-native'
 import { Card, Button, Input } from 'react-native-elements'
 import { Entypo } from '@expo/vector-icons'
 import NavBar from '../components/NavBar'
@@ -13,6 +20,11 @@ import { StoreContext } from '../context/store'
 import axios from 'axios'
 
 const HomeScreen = ({ navigation }) => {
+  const [refreshing, setRefreshing] = useState(false)
+  const [reload, setReload] = useState(false)
+  const onRefresh = () => {
+    reload ? setReload(false) : setReload(true)
+  }
   const netInfo = useNetInfo()
   if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
     alert('No Internet!')
@@ -25,28 +37,34 @@ const HomeScreen = ({ navigation }) => {
 
   const { ui, uiDispatch } = useContext(StoreContext)
   const { data, dataDispatch } = useContext(StoreContext)
-
   const { loading } = ui
   const { blogs } = data
-
   useEffect(() => {
     setToken()
     getPost(uiDispatch, dataDispatch)
-  }, [])
+  }, [reload])
 
   return (
     <View style={globalStyles.viewStyle}>
       <NavBar navigation={navigation} />
-      <Card>
-        <Input
-          placeholder="What's On Your Mind?"
-          leftIcon={<Entypo name='pencil' size={24} color='black' />}
-          onChangeText={currentInput => {
-            storeData('post', currentInput)
-          }}
-        />
-        <Button title='Post' type='outline' onPress={handlePost} />
-      </Card>
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <Card>
+            <Input
+              placeholder="What's On Your Mind?"
+              leftIcon={<Entypo name='pencil' size={24} color='black' />}
+              onChangeText={currentInput => {
+                storeData('post', currentInput)
+              }}
+            />
+            <Button title='Post' type='outline' onPress={handlePost} />
+          </Card>
+        </ScrollView>
+      </SafeAreaView>
       {loading ? (
         <Card>
           <ActivityIndicator size='large' color='blue' animating={true} />
