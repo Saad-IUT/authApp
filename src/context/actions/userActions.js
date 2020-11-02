@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { removeData, storeData } from '../../functions/AsyncStorage'
+import { getLikes } from './dataActions'
 import {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
@@ -84,17 +85,6 @@ export const getAuthUser = (uiDispatch, userDispatch) => {
     })
     .catch(err => {
       uiDispatch({ type: STOP_LOADING_UI })
-      console.error(err.response)
-    })
-}
-
-export const getLikes = dispatch => {
-  axios
-    .get('/user/me')
-    .then(res => {
-      dispatch({ type: LIKE_SCREAM, payload: res.data.likes })
-    })
-    .catch(err => {
       console.error(err.response)
     })
 }

@@ -1,10 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { Card, Button, Text, Avatar } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'
 import dayjs from 'dayjs'
-import axios from 'axios'
 import { StoreContext } from '../context/store'
+import {
+  getLikes,
+  handleLike,
+  handleUnlike,
+} from '../context/actions/dataActions'
 
 const PostCard = ({
   navigation,
@@ -15,7 +19,6 @@ const PostCard = ({
   commentCount,
   likeCount,
 }) => {
-
   const { data, dataDispatch } = useContext(StoreContext)
   const { liked } = data
 
@@ -24,27 +27,9 @@ const PostCard = ({
     likedBlogs.push(like.blogId)
   })
 
-  const handleLike = () => {
-    axios
-      .get(`/blog/${blogId}/like`)
-      .then(res => {
-        alert('Liked!!')
-      })
-      .catch(err => {
-        alert(err.response.data.error)
-      })
-  }
-
-  const handleUnlike = () => {
-    axios
-      .get(`/blog/${blogId}/unlike`)
-      .then(res => {
-        alert('Unliked!!')
-      })
-      .catch(err => {
-        alert(err.response.data.error)
-      })
-  }
+  useEffect(() => {
+    getLikes(dataDispatch)
+  }, [])
 
   return (
     <Card>
@@ -87,14 +72,14 @@ const PostCard = ({
             type='outline'
             title={`  Like (${likeCount})`}
             icon={<AntDesign name='like2' size={24} color='dodgerblue' />}
-            onPress={handleLike}
+            onPress={() => handleLike(blogId)}
           />
         ) : (
           <Button
             type='outline'
             title={`  Like (${likeCount})`}
             icon={<AntDesign name='like1' size={24} color='dodgerblue' />}
-            onPress={handleUnlike}
+            onPress={() => handleUnlike(blogId)}
           />
         )}
         <Button
