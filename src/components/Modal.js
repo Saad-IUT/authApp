@@ -1,71 +1,68 @@
 import React, { useState } from 'react'
-import { Input, Button, Card } from 'react-native-elements'
-import {
-  FontAwesome,
-  FontAwesome5,
-  AntDesign,
-  Ionicons,
-} from '@expo/vector-icons'
+import { Input, Text } from 'react-native-elements'
+import { FontAwesome, AntDesign } from '@expo/vector-icons'
 
 import {
-  Alert,
   Modal,
   StyleSheet,
-  Text,
   TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native'
+import DateSelect from './DateSelect'
 
 const ModalWindow = () => {
   const [modalVisible, setModalVisible] = useState(false)
+  const [address, setAddress] = useState('')
+  const [work, setWork] = useState('')
+  const [disable, setDisable] = useState(false)
   return (
     <View>
-      <Modal
-        animationType='slide'
-        transparent={true}
-        visible={modalVisible}
-        // onRequestClose={() => {
-        //   Alert.alert('Modal has been closed.')
-        // }}
-      >
+      <Modal animationType='slide' transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Please add your details:</Text>
-            <Input
-              leftIcon={
-                <FontAwesome name='birthday-cake' size={20} color='black' />
-              }
-              placeholder='Born On'
-              onChangeText={currentInput => {
-                // setHandle(currentInput)
+
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
-              // disabled={disable}
-            />
+            >
+              <Text
+                h4Style={{
+                  fontSize: 20,
+                  margin: 10,
+                  fontWeight: 'normal',
+                }}
+                h4
+              >
+                Born on:
+              </Text>
+              <DateSelect />
+            </View>
             <Input
               leftIcon={
                 <FontAwesome name='address-book' size={24} color='black' />
               }
               placeholder='Address'
               onChangeText={currentInput => {
-                // setHandle(currentInput)
+                setAddress(currentInput)
               }}
-              // disabled={disable}
+              disabled={disable}
             />
             <Input
               leftIcon={<FontAwesome name='building' size={24} color='black' />}
               placeholder='Works at'
               onChangeText={currentInput => {
-                // setHandle(currentInput)
+                setWork(currentInput)
               }}
-              // disabled={disable}
+              disabled={disable}
             />
-            
+
             <View
               style={{
                 flexDirection: 'row',
-                // alignItems: 'center',
-                // justifyContent: 'center',
               }}
             >
               <TouchableHighlight
@@ -79,7 +76,7 @@ const ModalWindow = () => {
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
                 onPress={() => {
-                  console.log('update')
+                  console.log(address, work)
                 }}
               >
                 <Text style={styles.textStyle}>Update</Text>
@@ -103,8 +100,6 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    // alignItems: 'center',
-    // marginTop: 22,
   },
   modalView: {
     margin: 20,
