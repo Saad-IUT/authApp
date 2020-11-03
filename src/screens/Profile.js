@@ -1,17 +1,16 @@
 import React, { useEffect, useContext } from 'react'
 import {
   ActivityIndicator,
-  Button,
   Pressable,
   TouchableOpacity,
   View,
 } from 'react-native'
 import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
+import Modal from '../components/Modal'
 import { StoreContext } from '../context/store'
 import globalStyles from '../styles/global'
 import { FontAwesome } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
 import { getAuthUser } from '../context/actions/userActions'
 const ProfileScreen = ({ navigation }) => {
   const { user, userDispatch } = useContext(StoreContext)
@@ -47,7 +46,7 @@ const ProfileScreen = ({ navigation }) => {
           <FontAwesome
             name='user-circle'
             size={28}
-            color='pink'
+            color='#377dff'
             style={{ marginLeft: -15, marginBottom: -10 }}
           />
         </TouchableOpacity>
@@ -74,9 +73,7 @@ const ProfileScreen = ({ navigation }) => {
               >
                 {credentials.handle}
               </Text>
-              <TouchableOpacity onPress={() => console.log('edit details')}>
-                <AntDesign name='edit' size={28} color='pink' />
-              </TouchableOpacity>
+              <Modal />
             </View>
             <Pressable
               onLongPress={() => {
@@ -85,7 +82,7 @@ const ProfileScreen = ({ navigation }) => {
             >
               <Text
                 style={{
-                  backgroundColor: '#E60023',
+                  backgroundColor: 'red',
                   textAlign: 'center',
                   padding: 10,
                 }}
