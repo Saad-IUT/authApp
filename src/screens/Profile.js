@@ -6,12 +6,11 @@ import {
   View,
   ScrollView,
   RefreshControl,
-  SafeAreaView,
 } from 'react-native'
 import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
 import ModalWindow from '../components/ModalWindow'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 import globalStyles from '../styles/global'
 import { FontAwesome } from '@expo/vector-icons'
 import { getAuthUser } from '../context/actions/userActions'
@@ -23,9 +22,9 @@ const ProfileScreen = ({ navigation }) => {
   const onRefresh = () => {
     reload ? setReload(false) : setReload(true)
   }
-  const { user, userDispatch } = useContext(StoreContext)
+  const { user, userDispatch } = useContext(AppContext)
   const { credentials } = user
-  const { ui, uiDispatch } = useContext(StoreContext)
+  const { ui, uiDispatch } = useContext(AppContext)
   const { loading } = ui
   useEffect(() => {
     getAuthUser(uiDispatch, userDispatch)
@@ -104,7 +103,7 @@ const ProfileScreen = ({ navigation }) => {
                 </Text>
               </Pressable>
               <Text style={globalStyles.textStyle}>
-                Born on : {dayjs(credentials.dob).format('DD MMM,YYYY')}
+                Born on : {dayjs(credentials.dob).format('DD MMM, YYYY')}
               </Text>
               <Text style={globalStyles.textStyle}>
                 Address : {credentials.location}

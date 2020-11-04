@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import AuthStackScreen from './src/routes/AuthStack'
-import { StoreContext, Store } from './src/context/store'
+import { AppContext, AppProvider } from './src/context/store'
 import AppDrawerScreen from './src/routes/AppDrawer'
 import axios from 'axios'
 import { getData } from './src/functions/AsyncStorage'
@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 
 const AppStart = () => {
-  const { user, userDispatch } = useContext(StoreContext)
+  const { user, userDispatch } = useContext(AppContext)
   const { authenticated } = user
   // AsyncStorage.clear()
   // AsyncStorage.getAllKeys((err, keys) => {
@@ -47,9 +47,9 @@ const AppStart = () => {
 
 const App = () => {
   return (
-    <Store>
+    <AppProvider>
       <AppStart />
-    </Store>
+    </AppProvider>
   )
 }
 

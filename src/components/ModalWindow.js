@@ -11,14 +11,14 @@ import {
 import DateSelect from './DateSelect'
 import { getData } from '../functions/AsyncStorage'
 import { detailsUpdate } from '../context/actions/dataActions'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 import globalStyles from '../styles/global'
 
 const ModalWindow = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [address, setAddress] = useState('')
   const [work, setWork] = useState('')
-  const { ui, uiDispatch } = useContext(StoreContext)
+  const { ui, uiDispatch } = useContext(AppContext)
   const { loading, disable } = ui
   return (
     <View>

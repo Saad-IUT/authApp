@@ -2,9 +2,9 @@ import React, { useReducer } from 'react'
 import DataReducer from './reducers/dataReducer'
 import UIReducer from './reducers/uiReducer'
 import UserReducer from './reducers/userReducer'
-const StoreContext = React.createContext()
+const AppContext = React.createContext()
 
-const Store = ({ children }) => {
+const AppProvider = ({ children }) => {
   const [data, dataDispatch] = useReducer(DataReducer, [], () => {
     return { blogs: [], comments: [], liked: [] }
   })
@@ -15,7 +15,7 @@ const Store = ({ children }) => {
     return { authenticated: false, credentials: [], userData: [] }
   })
   return (
-    <StoreContext.Provider
+    <AppContext.Provider
       value={{
         data,
         dataDispatch,
@@ -26,8 +26,8 @@ const Store = ({ children }) => {
       }}
     >
       {children}
-    </StoreContext.Provider>
+    </AppContext.Provider>
   )
 }
 
-export { StoreContext, Store }
+export { AppContext, AppProvider }

@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native'
 import { Card, Button, Text, Avatar } from 'react-native-elements'
 import { AntDesign } from '@expo/vector-icons'
 import dayjs from 'dayjs'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 import {
   getLikes,
   handleLike,
@@ -19,7 +19,7 @@ const PostCard = ({
   commentCount,
   likeCount,
 }) => {
-  const { data, dataDispatch } = useContext(StoreContext)
+  const { data, dataDispatch } = useContext(AppContext)
   const { liked } = data
   let likedBlogs = []
   liked.forEach(like => {
@@ -53,7 +53,7 @@ const PostCard = ({
         </TouchableOpacity>
       </View>
       <Text style={{ fontStyle: 'italic' }}>
-        {dayjs(date).format('[Posted on] DD MMM,YYYY')}
+        {dayjs(date).format('[Posted on] DD MMM, YYYY')}
       </Text>
       <Text
         style={{

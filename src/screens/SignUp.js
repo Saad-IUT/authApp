@@ -4,7 +4,7 @@ import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles/global'
 import { signUp } from '../context/actions/userActions'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 
 const SignUpScreen = ({ navigation }) => {
   const [handle, setHandle] = useState('')
@@ -12,7 +12,7 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const { ui, uiDispatch } = useContext(StoreContext)
+  const { ui, uiDispatch } = useContext(AppContext)
   const { loading, disable, errors } = ui
   const handleSubmit = () => {
     signUp(
@@ -28,7 +28,7 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <View style={globalStyles.authViewStyle}>
       <Card>
-        <Card.Title>Welcome to AuthApp!</Card.Title>
+        <Card.Title>Welcome to Blog-47</Card.Title>
         <Card.Divider />
         <Input
           leftIcon={<Ionicons name='ios-person' size={24} color='black' />}

@@ -2,21 +2,21 @@ import React, { useContext, useState } from 'react'
 import { ActivityIndicator, View, Text } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 import globalStyles from '../styles/global'
 import { signIn } from '../context/actions/userActions'
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { user, userDispatch } = useContext(StoreContext)
-  const { ui, uiDispatch } = useContext(StoreContext)
-  const { data, dataDispatch } = useContext(StoreContext)
+  const { user, userDispatch } = useContext(AppContext)
+  const { ui, uiDispatch } = useContext(AppContext)
+  const { data, dataDispatch } = useContext(AppContext)
   const { loading, disable, errors } = ui
   return (
     <View style={globalStyles.authViewStyle}>
       <Card>
-        <Card.Title>Welcome to AuthApp!</Card.Title>
+        <Card.Title>Welcome to Blog-47</Card.Title>
         <Card.Divider />
         <Input
           leftIcon={<FontAwesome name='envelope' size={24} color='black' />}

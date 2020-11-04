@@ -15,7 +15,7 @@ import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
 import { handleComment } from '../context/actions/dataActions'
 import { storeData } from '../functions/AsyncStorage'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 import { getOneBlog } from '../context/actions/dataActions'
 const Comment = ({ navigation, route }) => {
   const [refreshing, setRefreshing] = useState(false)
@@ -24,9 +24,9 @@ const Comment = ({ navigation, route }) => {
     reload ? setReload(false) : setReload(true)
   }
   const { blogId, name, date, body, commentCount, likeCount } = route.params
-  const { data, dataDispatch } = useContext(StoreContext)
+  const { data, dataDispatch } = useContext(AppContext)
   const { comments } = data
-  const { ui, uiDispatch } = useContext(StoreContext)
+  const { ui, uiDispatch } = useContext(AppContext)
   const { loading } = ui
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const Comment = ({ navigation, route }) => {
               </Text>
             </View>
             <Text style={{ fontStyle: 'italic' }}>
-              {dayjs(date).format('[Posted on] DD MMM,YYYY')}
+              {dayjs(date).format('[Posted on] DD MMM, YYYY')}
             </Text>
             <Text
               style={{

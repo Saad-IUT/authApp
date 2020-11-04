@@ -16,7 +16,7 @@ import { useNetInfo } from '@react-native-community/netinfo'
 import { handlePost } from '../context/actions/dataActions'
 import { getPost } from '../context/actions/dataActions'
 import { getData, storeData } from '../functions/AsyncStorage'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 import axios from 'axios'
 
 const HomeScreen = ({ navigation }) => {
@@ -35,8 +35,8 @@ const HomeScreen = ({ navigation }) => {
     axios.defaults.headers.common['Authorization'] = FBIdToken
   }
 
-  const { ui, uiDispatch } = useContext(StoreContext)
-  const { data, dataDispatch } = useContext(StoreContext)
+  const { ui, uiDispatch } = useContext(AppContext)
+  const { data, dataDispatch } = useContext(AppContext)
   const { loading } = ui
   const { blogs } = data
   useEffect(() => {

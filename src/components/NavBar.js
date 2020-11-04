@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { Header } from 'react-native-elements'
 import { logoutUser } from '../context/actions/userActions'
-import { StoreContext } from '../context/store'
+import { AppContext } from '../context/store'
 
 const NavBar = ({ navigation }) => {
-  const { user, userDispatch } = useContext(StoreContext)
+  const { user, userDispatch } = useContext(AppContext)
   return (
     <Header
       leftComponent={{
