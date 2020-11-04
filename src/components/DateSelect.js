@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import DatePicker from 'react-native-datepicker'
 import { View } from 'react-native'
 import { storeData } from '../functions/AsyncStorage'
-const MyDatePicker = () => {
+const DateSelect = () => {
   const [date, setDate] = useState(new Date().toISOString())
-
   return (
     <View>
       <DatePicker
@@ -36,4 +35,5 @@ const MyDatePicker = () => {
     </View>
   )
 }
-export default MyDatePicker
+
+export default DateSelect

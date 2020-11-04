@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Header } from 'react-native-elements'
 import { logoutUser } from '../context/actions/userActions'
 import { StoreContext } from '../context/store'
+
 const NavBar = ({ navigation }) => {
   const { user, userDispatch } = useContext(StoreContext)
   return (
@@ -19,7 +20,6 @@ const NavBar = ({ navigation }) => {
         color: '#fff',
         onPress: () => {
           logoutUser(userDispatch)
-          // userDispatch({ type: SET_UNAUTHENTICATED })
         },
       }}
     />

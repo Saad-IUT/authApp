@@ -6,7 +6,23 @@ import {
   STOP_LOADING_UI,
   SET_BLOGS,
   LIKE_SCREAM,
+  DISABLE_INPUT,
+  ENABLE_INPUT,
 } from '../types'
+
+export const detailsUpdate = (date, work, address, dispatch) => {
+  dispatch({ type: DISABLE_INPUT })
+  axios
+    .post('/user', { dob: date, work: work, location: address })
+    .then(res => {
+      alert('Details added successfully!!')
+      dispatch({ type: ENABLE_INPUT })
+    })
+    .catch(err => {
+      console.error(err.response)
+      dispatch({ type: ENABLE_INPUT })
+    })
+}
 
 export const handleComment = async blogId => {
   const comment = await getData('comment')

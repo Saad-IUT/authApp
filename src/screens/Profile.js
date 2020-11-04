@@ -1,107 +1,121 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import {
   ActivityIndicator,
   Pressable,
   TouchableOpacity,
   View,
+  ScrollView,
+  RefreshControl,
+  SafeAreaView,
 } from 'react-native'
 import { Card, Image, Text } from 'react-native-elements'
 import NavBar from '../components/NavBar'
-import Modal from '../components/Modal'
+import ModalWindow from '../components/ModalWindow'
 import { StoreContext } from '../context/store'
 import globalStyles from '../styles/global'
 import { FontAwesome } from '@expo/vector-icons'
 import { getAuthUser } from '../context/actions/userActions'
+import dayjs from 'dayjs'
+
 const ProfileScreen = ({ navigation }) => {
+  const [refreshing, setRefreshing] = useState(false)
+  const [reload, setReload] = useState(false)
+  const onRefresh = () => {
+    reload ? setReload(false) : setReload(true)
+  }
   const { user, userDispatch } = useContext(StoreContext)
   const { credentials } = user
   const { ui, uiDispatch } = useContext(StoreContext)
   const { loading } = ui
-
   useEffect(() => {
     getAuthUser(uiDispatch, userDispatch)
-  }, [])
-
+  }, [reload])
   return (
     <View>
       <NavBar navigation={navigation} />
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-        }}
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       >
-        <Image
-          source={{
-            uri: credentials.imageUrl,
-          }}
-          style={{ width: 300, height: 400, marginLeft: 45 }}
-          PlaceholderContent={<ActivityIndicator />}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            console.log('image upload')
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'flex-end',
           }}
         >
-          <FontAwesome
-            name='user-circle'
-            size={28}
-            color='#377dff'
-            style={{ marginLeft: -15, marginBottom: -10 }}
+          <Image
+            source={{
+              uri: credentials.imageUrl,
+            }}
+            style={{ width: 300, height: 400, marginLeft: 45 }}
+            PlaceholderContent={<ActivityIndicator />}
           />
-        </TouchableOpacity>
-      </View>
-      <Card>
-        {loading ? (
-          <ActivityIndicator size='large' color='blue' animating={true} />
-        ) : (
-          <>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                h4Style={{
-                  padding: 10,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                }}
-                h4
-              >
-                {credentials.handle}
-              </Text>
-              <Modal />
-            </View>
-            <Pressable
-              onLongPress={() => {
-                console.log('Are you sure?')
-              }}
-            >
-              <Text
+          <TouchableOpacity
+            onPress={() => {
+              console.log('image upload')
+            }}
+          >
+            <FontAwesome
+              name='user-circle'
+              size={28}
+              color='#377dff'
+              style={{ marginLeft: -15, marginBottom: -10 }}
+            />
+          </TouchableOpacity>
+        </View>
+        <Card>
+          {loading ? (
+            <ActivityIndicator size='large' color='blue' animating={true} />
+          ) : (
+            <>
+              <View
                 style={{
-                  backgroundColor: 'red',
-                  textAlign: 'center',
-                  padding: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
-                Delete Profile
+                <Text
+                  h4Style={{
+                    padding: 10,
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                  }}
+                  h4
+                >
+                  {credentials.handle}
+                </Text>
+                <ModalWindow />
+              </View>
+              <Pressable
+                onLongPress={() => {
+                  console.log('Are you sure?')
+                }}
+              >
+                <Text
+                  style={{
+                    backgroundColor: 'red',
+                    textAlign: 'center',
+                    padding: 10,
+                  }}
+                >
+                  Delete Profile
+                </Text>
+              </Pressable>
+              <Text style={globalStyles.textStyle}>
+                Born on : {dayjs(credentials.dob).format('DD MMM,YYYY')}
               </Text>
-            </Pressable>
-            <Text style={globalStyles.textStyle}>
-              Born on : {credentials.dob}
-            </Text>
-            <Text style={globalStyles.textStyle}>
-              Address : {credentials.location}
-            </Text>
-            <Text style={globalStyles.textStyle}>
-              Works at : {credentials.work}
-            </Text>
-          </>
-        )}
-      </Card>
+              <Text style={globalStyles.textStyle}>
+                Address : {credentials.location}
+              </Text>
+              <Text style={globalStyles.textStyle}>
+                Works at : {credentials.work}
+              </Text>
+            </>
+          )}
+        </Card>
+      </ScrollView>
     </View>
   )
 }

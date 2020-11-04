@@ -14,7 +14,6 @@ const SignUpScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const { ui, uiDispatch } = useContext(StoreContext)
   const { loading, disable, errors } = ui
-
   const handleSubmit = () => {
     signUp(
       handle,
@@ -26,7 +25,6 @@ const SignUpScreen = ({ navigation }) => {
       uiDispatch
     )
   }
-
   return (
     <View style={globalStyles.authViewStyle}>
       <Card>

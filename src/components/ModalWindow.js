@@ -1,29 +1,31 @@
-import React, { useState } from 'react'
-import { Input, Text } from 'react-native-elements'
+import React, { useContext, useState } from 'react'
+import { Card, Input, Text } from 'react-native-elements'
 import { FontAwesome, AntDesign } from '@expo/vector-icons'
-
 import {
+  ActivityIndicator,
   Modal,
-  StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native'
 import DateSelect from './DateSelect'
 import { getData } from '../functions/AsyncStorage'
+import { detailsUpdate } from '../context/actions/dataActions'
+import { StoreContext } from '../context/store'
+import globalStyles from '../styles/global'
 
 const ModalWindow = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [address, setAddress] = useState('')
   const [work, setWork] = useState('')
-  const [disable, setDisable] = useState(false)
+  const { ui, uiDispatch } = useContext(StoreContext)
+  const { loading, disable } = ui
   return (
     <View>
       <Modal animationType='slide' transparent={true} visible={modalVisible}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Please add your details:</Text>
-
+        <View style={globalStyles.centeredView}>
+          <View style={globalStyles.modalView}>
+            <Text style={globalStyles.modalText}>Please add your details:</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -60,30 +62,38 @@ const ModalWindow = () => {
               }}
               disabled={disable}
             />
-
-            <View
-              style={{
-                flexDirection: 'row',
-              }}
-            >
-              <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: 'red' }}
-                onPress={() => {
-                  setModalVisible(!modalVisible)
+            {loading ? (
+              <Card>
+                <ActivityIndicator size='large' color='blue' animating={true} />
+              </Card>
+            ) : (
+              <View
+                style={{
+                  flexDirection: 'row',
                 }}
               >
-                <Text style={styles.textStyle}>Cancel</Text>
-              </TouchableHighlight>
-              <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
-                onPress={async () => {
-                  const date = await getData('date')
-                  console.log(address, work, date)
-                }}
-              >
-                <Text style={styles.textStyle}>Update</Text>
-              </TouchableHighlight>
-            </View>
+                <TouchableHighlight
+                  style={{ ...globalStyles.openButton, backgroundColor: 'red' }}
+                  onPress={() => {
+                    setModalVisible(!modalVisible)
+                  }}
+                >
+                  <Text style={globalStyles.modalTextStyle}>Cancel</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  style={{
+                    ...globalStyles.openButton,
+                    backgroundColor: '#2196F3',
+                  }}
+                  onPress={async () => {
+                    const date = await getData('date')
+                    detailsUpdate(date, work, address, uiDispatch)
+                  }}
+                >
+                  <Text style={globalStyles.modalTextStyle}>Update</Text>
+                </TouchableHighlight>
+              </View>
+            )}
           </View>
         </View>
       </Modal>
@@ -97,43 +107,5 @@ const ModalWindow = () => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  openButton: {
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-    margin: 6,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-})
 
 export default ModalWindow

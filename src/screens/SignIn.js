@@ -13,7 +13,6 @@ const SignInScreen = ({ navigation }) => {
   const { ui, uiDispatch } = useContext(StoreContext)
   const { data, dataDispatch } = useContext(StoreContext)
   const { loading, disable, errors } = ui
-
   return (
     <View style={globalStyles.authViewStyle}>
       <Card>

@@ -21,16 +21,13 @@ const PostCard = ({
 }) => {
   const { data, dataDispatch } = useContext(StoreContext)
   const { liked } = data
-
   let likedBlogs = []
   liked.forEach(like => {
     likedBlogs.push(like.blogId)
   })
-
   useEffect(() => {
     getLikes(dataDispatch)
   }, [])
-
   return (
     <Card>
       <View

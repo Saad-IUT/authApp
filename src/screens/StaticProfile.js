@@ -12,11 +12,9 @@ const StaticProfileScreen = ({ navigation, route }) => {
   const { userData } = user
   const { ui, uiDispatch } = useContext(StoreContext)
   const { loading } = ui
-
   useEffect(() => {
     getUser(uiDispatch, userDispatch, name)
   }, [])
-
   return (
     <View>
       <NavBar navigation={navigation} />
