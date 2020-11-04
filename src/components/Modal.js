@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native'
 import DateSelect from './DateSelect'
+import { getData } from '../functions/AsyncStorage'
 
 const ModalWindow = () => {
   const [modalVisible, setModalVisible] = useState(false)
@@ -75,8 +76,9 @@ const ModalWindow = () => {
               </TouchableHighlight>
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
-                onPress={() => {
-                  console.log(address, work)
+                onPress={async () => {
+                  const date = await getData('date')
+                  console.log(address, work, date)
                 }}
               >
                 <Text style={styles.textStyle}>Update</Text>

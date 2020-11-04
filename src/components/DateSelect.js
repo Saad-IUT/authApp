@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import DatePicker from 'react-native-datepicker'
 import { View } from 'react-native'
+import { storeData } from '../functions/AsyncStorage'
 const MyDatePicker = () => {
   const [date, setDate] = useState(new Date().toISOString())
 
@@ -29,6 +30,7 @@ const MyDatePicker = () => {
         }}
         onDateChange={date => {
           setDate(date)
+          storeData('date', date)
         }}
       />
     </View>
