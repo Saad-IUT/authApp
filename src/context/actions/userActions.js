@@ -37,7 +37,7 @@ export const signUp = (
     .then(() => {
       navigation.navigate('SignIn')
       dispatch({ type: ENABLE_INPUT })
-      // uiDispatch({ type: STOP_LOADING_UI })
+      alert('Account created succesfully!!')
     })
     .catch(err => {
       dispatch({ type: ENABLE_INPUT })
