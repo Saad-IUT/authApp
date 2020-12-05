@@ -18,7 +18,7 @@ const SignUpScreen = ({ navigation }) => {
   const { loading, disable } = ui
 
   const handleSubmit = async () => {
-    let data = validateSignupData({
+    let data = await validateSignupData({
       handle,
       studentId,
       email,
@@ -28,7 +28,6 @@ const SignUpScreen = ({ navigation }) => {
 
     let { valid, errors } = data
     setErrors(errors)
-    console.log(errors)
     let users = await getDataJSON('user')
     if (valid) {
       if (users) {
