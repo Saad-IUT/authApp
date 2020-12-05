@@ -3,9 +3,9 @@ import { ActivityIndicator, View, Text } from 'react-native'
 import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign, Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles/global'
-import { signUp } from '../context/actions/userActions'
 import { AppContext } from '../context/store'
 import { getDataJSON, storeDataJSON } from '../functions/AsyncStorage'
+import { validateSignupData } from '../utils/validators'
 
 const SignUpScreen = ({ navigation }) => {
   const [handle, setHandle] = useState('')
@@ -13,48 +13,49 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState(false)
   const { ui, uiDispatch } = useContext(AppContext)
   const { loading, disable } = ui
-  const handleSubmit = async () => {
-    let users = await getDataJSON('user')
-    if (users) {
-      storeDataJSON('user', [
-        ...users,
-        {
-          handle,
-          studentId,
-          email,
-          password,
-          confirmPassword,
-          // navigation,
-          // uiDispatch,
-        },
-      ])
-    } else {
-      storeDataJSON('user', [
-        {
-          handle,
-          studentId,
-          email,
-          password,
-          confirmPassword,
-          // navigation,
-          // uiDispatch,
-        },
-      ])
-    }
 
-    // signUp(
-    //   handle,
-    //   studentId,
-    //   email,
-    //   password,
-    //   confirmPassword,
-    //   navigation,
-    //   uiDispatch
-    // )
+  const handleSubmit = async () => {
+    let data = validateSignupData({
+      handle,
+      studentId,
+      email,
+      password,
+      confirmPassword,
+    })
+
+    let { valid, errors } = data
+    setErrors(errors)
+    console.log(errors)
+    let users = await getDataJSON('user')
+    if (valid) {
+      if (users) {
+        storeDataJSON('user', [
+          ...users,
+          {
+            handle,
+            studentId,
+            email,
+            password,
+            confirmPassword,
+          },
+        ])
+      } else {
+        storeDataJSON('user', [
+          {
+            handle,
+            studentId,
+            email,
+            password,
+            confirmPassword,
+          },
+        ])
+      }
+    }
   }
+
   return (
     <View style={globalStyles.authViewStyle}>
       <Card>
@@ -71,7 +72,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        <Text style={globalStyles.errorTextStyle}>{errors.handle}</Text>
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.handle}</Text>
+        ) : null}
         <Input
           leftIcon={<Ionicons name='ios-school' size={24} color='black' />}
           placeholder='Student ID'
@@ -83,7 +86,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        <Text style={globalStyles.errorTextStyle}>{errors.studentId}</Text>
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.studentId}</Text>
+        ) : null}
         <Input
           leftIcon={<FontAwesome name='envelope' size={24} color='black' />}
           placeholder='E-mail Address'
@@ -95,8 +100,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
-
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
+        ) : null}
         <Input
           placeholder='Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -109,8 +115,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        <Text style={globalStyles.errorTextStyle}>{errors.password}</Text>
-
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>{errors.password}</Text>
+        ) : null}
         <Input
           placeholder='Confirm Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -123,10 +130,11 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        <Text style={globalStyles.errorTextStyle}>
-          {errors.confirmPassword}
-        </Text>
-
+        {errors ? (
+          <Text style={globalStyles.errorTextStyle}>
+            {errors.confirmPassword}
+          </Text>
+        ) : null}
         {loading ? (
           <Button
             icon={
