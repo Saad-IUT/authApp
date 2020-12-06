@@ -13,21 +13,54 @@ import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
-import { handleComment } from '../context/actions/dataActions'
-import { storeData } from '../functions/AsyncStorage'
+import {
+  storeDataJSON,
+  getData,
+  getDataJSON,
+} from '../functions/AsyncStorage'
 import { AppContext } from '../context/store'
 import { getOneBlog } from '../context/actions/dataActions'
 const Comment = ({ navigation, route }) => {
+  const [comment, setComment] = useState('')
   const [refreshing, setRefreshing] = useState(false)
   const [reload, setReload] = useState(false)
-  const onRefresh = () => {
-    reload ? setReload(false) : setReload(true)
-  }
-  const { blogId, name, date, body, commentCount, likeCount } = route.params
   const { data, dataDispatch } = useContext(AppContext)
   const { comments } = data
   const { ui, uiDispatch } = useContext(AppContext)
   const { loading } = ui
+  const { blogId, name, date, body, commentCount, likeCount } = route.params
+  const handleComment = async () => {
+    const handle = await getData('token')
+    const posts = await getDataJSON('posts')
+    const comments = await getDataJSON('comments')
+    posts.forEach(post => {
+      if (post.blogId == blogId) post.commentCount++
+      storeDataJSON('posts', posts)
+    })
+    if (comments) {
+      storeDataJSON('comments', [
+        ...comments,
+        {
+          blogId,
+          body: comment,
+          createdAt: Date.now(),
+          userHandle: handle,
+        },
+      ])
+    } else {
+      storeDataJSON('comments', [
+        {
+          blogId,
+          body: comment,
+          createdAt: Date.now(),
+          userHandle: handle,
+        },
+      ])
+    }
+  }
+  const onRefresh = () => {
+    reload ? setReload(false) : setReload(true)
+  }
 
   useEffect(() => {
     getOneBlog(blogId, dataDispatch, uiDispatch)
@@ -77,10 +110,10 @@ const Comment = ({ navigation, route }) => {
               placeholder='Write Somethong!'
               leftIcon={<Entypo name='pencil' size={24} color='black' />}
               onChangeText={currentInput => {
-                storeData('comment', currentInput)
+                setComment(currentInput)
               }}
             />
-            <Button title='Comment' onPress={() => handleComment(blogId)} />
+            <Button title='Comment' onPress={handleComment} />
           </Card>
         </ScrollView>
       </SafeAreaView>

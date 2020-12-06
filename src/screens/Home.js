@@ -35,6 +35,7 @@ const HomeScreen = ({ navigation }) => {
           createdAt: Date.now(),
           likeCount: 0,
           userHandle: handle,
+          blogId: Math.random().toString(36).substring(7),
         },
       ])
     } else {
@@ -45,6 +46,7 @@ const HomeScreen = ({ navigation }) => {
           createdAt: Date.now(),
           likeCount: 0,
           userHandle: handle,
+          blogId: Math.random().toString(36).substring(7),
         },
       ])
     }

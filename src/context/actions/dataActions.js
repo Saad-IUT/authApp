@@ -37,18 +37,18 @@ export const handleComment = async blogId => {
   removeData('comment')
 }
 
-export const handlePost = async () => {
-  const post = await getData('post')
-  axios
-    .post('/blog', { body: post })
-    .then(res => {
-      alert('Posted successfully!!')
-    })
-    .catch(err => {
-      console.error(err.response)
-    })
-  removeData('post')
-}
+// export const handlePost = async () => {
+//   const post = await getData('post')
+//   axios
+//     .post('/blog', { body: post })
+//     .then(res => {
+//       alert('Posted successfully!!')
+//     })
+//     .catch(err => {
+//       console.error(err.response)
+//     })
+//   removeData('post')
+// }
 
 export const getPost = async (uiDispatch, dataDispatch) => {
   uiDispatch({ type: LOADING_UI })
@@ -61,18 +61,20 @@ export const getPost = async (uiDispatch, dataDispatch) => {
   }
 }
 
-export const getOneBlog = (blogId, dataDispatch, uiDispatch) => {
+export const getOneBlog = async (blogId, dataDispatch, uiDispatch) => {
+  const commentData = []
   uiDispatch({ type: LOADING_UI })
-  axios
-    .get(`/blog/${blogId}`)
-    .then(res => {
-      dataDispatch({ type: SET_COMMENT, payload: res.data.comments })
-      uiDispatch({ type: STOP_LOADING_UI })
+  let comments = await getDataJSON('comments')
+  if (comments) {
+    comments.forEach(comment => {
+      if (comment.blogId == blogId) {
+        commentData.push(comment)
+        dataDispatch({ type: SET_COMMENT, payload: commentData })
+        uiDispatch({ type: STOP_LOADING_UI })
+      }
     })
-    .catch(err => {
-      uiDispatch({ type: STOP_LOADING_UI })
-      console.error(err.response)
-    })
+  }
+  uiDispatch({ type: STOP_LOADING_UI })
 }
 
 export const getLikes = dispatch => {
