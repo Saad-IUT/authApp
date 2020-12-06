@@ -13,7 +13,7 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [errors, setErrors] = useState(false)
+  const [errors, setErrors] = useState('')
   const { ui, uiDispatch } = useContext(AppContext)
   const { loading, disable } = ui
 
@@ -71,9 +71,7 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        {errors ? (
-          <Text style={globalStyles.errorTextStyle}>{errors.handle}</Text>
-        ) : null}
+        <Text style={globalStyles.errorTextStyle}>{errors.handle}</Text>
         <Input
           leftIcon={<Ionicons name='ios-school' size={24} color='black' />}
           placeholder='Student ID'
@@ -85,9 +83,7 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        {errors ? (
-          <Text style={globalStyles.errorTextStyle}>{errors.studentId}</Text>
-        ) : null}
+        <Text style={globalStyles.errorTextStyle}>{errors.studentId}</Text>
         <Input
           leftIcon={<FontAwesome name='envelope' size={24} color='black' />}
           placeholder='E-mail Address'
@@ -99,9 +95,7 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        {errors ? (
-          <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
-        ) : null}
+        <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
         <Input
           placeholder='Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -114,9 +108,7 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        {errors ? (
-          <Text style={globalStyles.errorTextStyle}>{errors.password}</Text>
-        ) : null}
+        <Text style={globalStyles.errorTextStyle}>{errors.password}</Text>
         <Input
           placeholder='Confirm Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
@@ -129,11 +121,9 @@ const SignUpScreen = ({ navigation }) => {
           }}
           disabled={disable}
         />
-        {errors ? (
-          <Text style={globalStyles.errorTextStyle}>
-            {errors.confirmPassword}
-          </Text>
-        ) : null}
+        <Text style={globalStyles.errorTextStyle}>
+          {errors.confirmPassword}
+        </Text>
         {loading ? (
           <Button
             icon={

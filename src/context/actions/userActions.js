@@ -107,6 +107,8 @@ export const logoutUser = async dispatch => {
   await removeData('FBIdToken')
   delete axios.defaults.headers.common['Authorization']
   dispatch({ type: SET_UNAUTHENTICATED })
+  removeData('token')
+  alert('Signed out!')
 }
 
 const setAuthorizationHeader = token => {

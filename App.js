@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import AuthStackScreen from './src/routes/AuthStack'
 import { AppContext, AppProvider } from './src/context/store'
@@ -15,6 +15,13 @@ axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 const AppStart = () => {
   const { user, userDispatch } = useContext(AppContext)
   const { authenticated } = user
+  const [token, setToken] = useState(false)
+  const getToken = async () => {
+    const tokenData = await getData('token')
+    setToken(tokenData)
+  }
+  // console.log(authenticated)
+  // const { authenticated } = user
   // AsyncStorage.clear()
   // AsyncStorage.getAllKeys((err, keys) => {
   //   AsyncStorage.multiGet(keys, (error, stores) => {
@@ -24,23 +31,27 @@ const AppStart = () => {
   //     })
   //   })
   // })
-  const getAuth = async () => {
-    const token = await getData('FBIdToken')
-    if (token) {
-      const decodedToken = jwtDecode(token)
-      if (decodedToken.exp * 1000 < Date.now()) {
-        logoutUser(userDispatch)
-      } else {
-        userDispatch({ type: SET_AUTHENTICATED })
-      }
-    }
-  }
+  // const getAuth = async () => {
+  //   const token = await getData('FBIdToken')
+  //   if (token) {
+  //     const decodedToken = jwtDecode(token)
+  //     if (decodedToken.exp * 1000 < Date.now()) {
+  //       logoutUser(userDispatch)
+  //     } else {
+  //       userDispatch({ type: SET_AUTHENTICATED })
+  //     }
+  //   }
+  // }
   useEffect(() => {
-    getAuth()
+    getToken()
   }, [])
   return (
     <NavigationContainer>
-      {authenticated ? <AppDrawerScreen /> : <AuthStackScreen />}
+      {authenticated || token ? (
+        <AppDrawerScreen />
+      ) : (
+        <AuthStackScreen />
+      )}
     </NavigationContainer>
   )
 }

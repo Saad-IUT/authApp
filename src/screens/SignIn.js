@@ -4,15 +4,42 @@ import { Input, Button, Card } from 'react-native-elements'
 import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
 import { AppContext } from '../context/store'
 import globalStyles from '../styles/global'
-import { signIn } from '../context/actions/userActions'
+import { validateLoginData } from '../utils/validators'
+import { getDataJSON, storeData } from '../functions/AsyncStorage'
+import { SET_AUTHENTICATED } from '../context/types'
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState('')
   const { user, userDispatch } = useContext(AppContext)
   const { ui, uiDispatch } = useContext(AppContext)
   const { data, dataDispatch } = useContext(AppContext)
-  const { loading, disable, errors } = ui
+  const { loading, disable } = ui
+  const handleSubmit = async () => {
+    let data = validateLoginData({
+      email,
+      password,
+    })
+
+    let { valid, errors } = data
+    setErrors(errors)
+    let users = await getDataJSON('user')
+    if (valid) {
+      if (users) {
+        users.forEach(user => {
+          if (user.email == email && user.password == password) {
+            userDispatch({ type: SET_AUTHENTICATED })
+            storeData('token', true)
+          } else {
+            setErrors({ general: 'Wrong credentials, please try again!' })
+          }
+        })
+      } else {
+        setErrors({ general: 'No user found, please sign up!' })
+      }
+    }
+  }
   return (
     <View style={globalStyles.authViewStyle}>
       <Card>
@@ -23,27 +50,29 @@ const SignInScreen = ({ navigation }) => {
           placeholder='E-mail Address'
           onChangeText={currentInput => {
             setEmail(currentInput)
+            setErrors({ ...errors, email: '' })
+            if (currentInput === '')
+              setErrors({ ...errors, email: 'Must not be empty' })
           }}
           disabled={disable}
         />
-        {errors ? (
-          <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
-        ) : null}
+        <Text style={globalStyles.errorTextStyle}>{errors.email}</Text>
         <Input
           placeholder='Password'
           leftIcon={<Feather name='key' size={24} color='black' />}
           secureTextEntry={true}
           onChangeText={currentInput => {
             setPassword(currentInput)
+            setErrors({ ...errors, password: '', general: '' })
+            if (currentInput === '')
+              setErrors({ ...errors, password: 'Must not be empty' })
           }}
           disabled={disable}
         />
-        {errors ? (
-          <Text style={globalStyles.errorTextStyle}>
-            {errors.password}
-            {errors.general}
-          </Text>
-        ) : null}
+        <Text style={globalStyles.errorTextStyle}>
+          {errors.password}
+          {errors.general}
+        </Text>
         {loading ? (
           <Button
             icon={
@@ -56,9 +85,7 @@ const SignInScreen = ({ navigation }) => {
             <Button
               icon={<AntDesign name='login' size={24} color='white' />}
               title='  Sign In!'
-              onPress={() => {
-                signIn(email, password, userDispatch, uiDispatch, dataDispatch)
-              }}
+              onPress={handleSubmit}
             />
             <Button
               type='clear'

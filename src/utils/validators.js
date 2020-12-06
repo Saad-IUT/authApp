@@ -46,7 +46,7 @@ exports.validateSignupData = async data => {
       }
     })
   }
-  
+
   return {
     errors,
     valid: Object.keys(errors).length === 0 ? true : false,
