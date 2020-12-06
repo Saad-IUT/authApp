@@ -13,15 +13,42 @@ import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import { useNetInfo } from '@react-native-community/netinfo'
-import { handlePost } from '../context/actions/dataActions'
+// import { handlePost } from '../context/actions/dataActions'
 import { getPost } from '../context/actions/dataActions'
-import { getData, storeData } from '../functions/AsyncStorage'
+import { getData, getDataJSON, storeDataJSON } from '../functions/AsyncStorage'
 import { AppContext } from '../context/store'
 import axios from 'axios'
 
 const HomeScreen = ({ navigation }) => {
+  const [post, setPost] = useState('')
   const [refreshing, setRefreshing] = useState(false)
   const [reload, setReload] = useState(false)
+  const handlePost = async () => {
+    const handle = await getData('token')
+    let posts = await getDataJSON('posts')
+    if (posts) {
+      storeDataJSON('posts', [
+        ...posts,
+        {
+          body: post,
+          commentCount: 0,
+          createdAt: Date.now(),
+          likeCount: 0,
+          userHandle: handle,
+        },
+      ])
+    } else {
+      storeDataJSON('posts', [
+        {
+          body: post,
+          commentCount: 0,
+          createdAt: Date.now(),
+          likeCount: 0,
+          userHandle: handle,
+        },
+      ])
+    }
+  }
   const onRefresh = () => {
     reload ? setReload(false) : setReload(true)
   }
@@ -58,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
               placeholder="What's On Your Mind?"
               leftIcon={<Entypo name='pencil' size={24} color='black' />}
               onChangeText={currentInput => {
-                storeData('post', currentInput)
+                setPost(currentInput)
               }}
             />
             <Button title='Post' type='outline' onPress={handlePost} />

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getData, removeData } from '../../functions/AsyncStorage'
+import { getData, getDataJSON, removeData } from '../../functions/AsyncStorage'
 import {
   SET_COMMENT,
   LOADING_UI,
@@ -50,18 +50,15 @@ export const handlePost = async () => {
   removeData('post')
 }
 
-export const getPost = (uiDispatch, dataDispatch) => {
+export const getPost = async (uiDispatch, dataDispatch) => {
   uiDispatch({ type: LOADING_UI })
-  axios
-    .get('/blogs')
-    .then(res => {
-      dataDispatch({ type: SET_BLOGS, payload: res.data })
-      uiDispatch({ type: STOP_LOADING_UI })
-    })
-    .catch(err => {
-      uiDispatch({ type: STOP_LOADING_UI })
-      console.error(err.response)
-    })
+  const posts = await getDataJSON('posts')
+  if (posts) {
+    dataDispatch({ type: SET_BLOGS, payload: posts })
+    uiDispatch({ type: STOP_LOADING_UI })
+  } else {
+    uiDispatch({ type: STOP_LOADING_UI })
+  }
 }
 
 export const getOneBlog = (blogId, dataDispatch, uiDispatch) => {

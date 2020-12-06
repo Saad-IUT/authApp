@@ -28,10 +28,10 @@ const SignUpScreen = ({ navigation }) => {
 
     let { valid, errors } = data
     setErrors(errors)
-    let users = await getDataJSON('user')
+    let users = await getDataJSON('users')
     if (valid) {
       if (users) {
-        storeDataJSON('user', [
+        storeDataJSON('users', [
           ...users,
           {
             handle,
@@ -41,8 +41,9 @@ const SignUpScreen = ({ navigation }) => {
             confirmPassword,
           },
         ])
+        navigation.navigate('SignIn')
       } else {
-        storeDataJSON('user', [
+        storeDataJSON('users', [
           {
             handle,
             studentId,
@@ -51,6 +52,7 @@ const SignUpScreen = ({ navigation }) => {
             confirmPassword,
           },
         ])
+        navigation.navigate('SignIn')
       }
     }
   }

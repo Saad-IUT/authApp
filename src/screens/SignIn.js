@@ -24,13 +24,14 @@ const SignInScreen = ({ navigation }) => {
 
     let { valid, errors } = data
     setErrors(errors)
-    let users = await getDataJSON('user')
+    let users = await getDataJSON('users')
     if (valid) {
       if (users) {
         users.forEach(user => {
           if (user.email == email && user.password == password) {
             userDispatch({ type: SET_AUTHENTICATED })
-            storeData('token', true)
+            const handle = user.handle
+            storeData('token', handle)
           } else {
             setErrors({ general: 'Wrong credentials, please try again!' })
           }

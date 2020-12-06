@@ -36,7 +36,7 @@ exports.validateSignupData = async data => {
     errors.studentId = 'Must be an integer'
   }
 
-  let users = await getDataJSON('user')
+  let users = await getDataJSON('users')
   if (users) {
     users.forEach(user => {
       if (user.handle == data.handle) {
