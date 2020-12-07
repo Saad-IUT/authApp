@@ -20,6 +20,7 @@ const Comment = ({ navigation, route }) => {
   const [comment, setComment] = useState('')
   const [refreshing, setRefreshing] = useState(false)
   const [reload, setReload] = useState(false)
+  const [update, setUpdate] = useState(false)
   const { data, dataDispatch } = useContext(AppContext)
   const { comments } = data
   const { ui, uiDispatch } = useContext(AppContext)
@@ -39,7 +40,7 @@ const Comment = ({ navigation, route }) => {
         {
           blogId,
           body: comment,
-          createdAt: Date.now(),
+          createdAt: new Date().toISOString(),
           userHandle: handle,
         },
       ])
@@ -49,12 +50,13 @@ const Comment = ({ navigation, route }) => {
         {
           blogId,
           body: comment,
-          createdAt: Date.now(),
+          createdAt: new Date().toISOString(),
           userHandle: handle,
         },
       ])
       alert('Comment added successfully!!')
     }
+    setUpdate(!update)
   }
   const onRefresh = () => {
     reload ? setReload(false) : setReload(true)
@@ -62,7 +64,7 @@ const Comment = ({ navigation, route }) => {
 
   useEffect(() => {
     getOneBlog(blogId, dataDispatch, uiDispatch)
-  }, [reload])
+  }, [reload, update])
 
   return (
     <View style={globalStyles.viewStyle}>

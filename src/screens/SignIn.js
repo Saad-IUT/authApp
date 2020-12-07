@@ -93,6 +93,7 @@ const SignInScreen = ({ navigation }) => {
               icon={<AntDesign name='user' size={24} color='dodgerblue' />}
               title="  Don't have an account?"
               onPress={() => {
+                setErrors('')
                 navigation.navigate('SignUp')
               }}
             />

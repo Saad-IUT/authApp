@@ -16,12 +16,12 @@ import { useNetInfo } from '@react-native-community/netinfo'
 import { getPost } from '../context/actions/dataActions'
 import { getData, getDataJSON, storeDataJSON } from '../functions/AsyncStorage'
 import { AppContext } from '../context/store'
-import axios from 'axios'
 
 const HomeScreen = ({ navigation }) => {
   const [post, setPost] = useState('')
   const [refreshing, setRefreshing] = useState(false)
   const [reload, setReload] = useState(false)
+  const [update, setUpdate] = useState(false)
   const handlePost = async () => {
     const handle = await getData('token')
     let posts = await getDataJSON('posts')
@@ -31,7 +31,7 @@ const HomeScreen = ({ navigation }) => {
         {
           body: post,
           commentCount: 0,
-          createdAt: Date.now(),
+          createdAt: new Date().toISOString(),
           likeCount: 0,
           userHandle: handle,
           blogId: Math.random().toString(36).substring(7),
@@ -43,7 +43,7 @@ const HomeScreen = ({ navigation }) => {
         {
           body: post,
           commentCount: 0,
-          createdAt: Date.now(),
+          createdAt: new Date().toISOString(),
           likeCount: 0,
           userHandle: handle,
           blogId: Math.random().toString(36).substring(7),
@@ -51,6 +51,7 @@ const HomeScreen = ({ navigation }) => {
       ])
       alert('First Post posted successfully!!')
     }
+    setUpdate(!update)
   }
   const onRefresh = () => {
     reload ? setReload(false) : setReload(true)
@@ -60,19 +61,13 @@ const HomeScreen = ({ navigation }) => {
     alert('No Internet!')
   }
 
-  const setToken = async () => {
-    const FBIdToken = await getData('FBIdToken')
-    axios.defaults.headers.common['Authorization'] = FBIdToken
-  }
-
   const { ui, uiDispatch } = useContext(AppContext)
   const { data, dataDispatch } = useContext(AppContext)
   const { loading } = ui
   const { blogs } = data
   useEffect(() => {
-    setToken()
     getPost(uiDispatch, dataDispatch)
-  }, [reload])
+  }, [reload, update])
 
   return (
     <View style={globalStyles.viewStyle}>

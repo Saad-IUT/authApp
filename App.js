@@ -20,7 +20,7 @@ const AppStart = () => {
     const tokenData = await getData('token')
     setToken(tokenData)
   }
-  AsyncStorage.clear()
+  // AsyncStorage.clear()
   AsyncStorage.getAllKeys((err, keys) => {
     AsyncStorage.multiGet(keys, (error, stores) => {
       stores.map((result, i, store) => {
