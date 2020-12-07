@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { removeData, storeData } from '../../functions/AsyncStorage'
-import { getLikes } from './dataActions'
+import { removeData } from '../../functions/AsyncStorage'
 import {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
@@ -14,66 +13,6 @@ import {
   CLEAR_ERRORS,
   LIKE_SCREAM,
 } from '../types'
-
-export const signUp = (
-  handle,
-  studentId,
-  email,
-  password,
-  confirmPassword,
-  navigation,
-  dispatch
-) => {
-  dispatch({ type: DISABLE_INPUT })
-  // uiDispatch({ type: LOADING_UI })
-  axios
-    .post('/signup', {
-      handle,
-      studentId,
-      email,
-      password,
-      confirmPassword,
-    })
-    .then(() => {
-      navigation.navigate('SignIn')
-      dispatch({ type: ENABLE_INPUT })
-      alert('Account created succesfully!!')
-    })
-    .catch(err => {
-      dispatch({ type: ENABLE_INPUT })
-      // uiDispatch({ type: STOP_LOADING_UI })
-      dispatch({ type: SET_ERRORS, payload: err.response.data })
-    })
-  dispatch({ type: CLEAR_ERRORS })
-}
-
-export const signIn = (
-  email,
-  password,
-  userDispatch,
-  uiDispatch,
-  dataDispatch
-) => {
-  uiDispatch({ type: DISABLE_INPUT })
-  // uiDispatch({ type: LOADING_UI })
-  axios
-    .post('/login', {
-      email,
-      password,
-    })
-    .then(res => {
-      setAuthorizationHeader(res.data.token)
-      userDispatch({ type: SET_AUTHENTICATED })
-      uiDispatch({ type: ENABLE_INPUT })
-      getLikes(dataDispatch)
-      // uiDispatch({ type: STOP_LOADING_UI })
-    })
-    .catch(err => {
-      uiDispatch({ type: ENABLE_INPUT })
-      uiDispatch({ type: SET_ERRORS, payload: err.response.data })
-    })
-  uiDispatch({ type: CLEAR_ERRORS })
-}
 
 export const getAuthUser = (uiDispatch, userDispatch) => {
   uiDispatch({ type: LOADING_UI })
@@ -109,10 +48,4 @@ export const logoutUser = async dispatch => {
   dispatch({ type: SET_UNAUTHENTICATED })
   removeData('token')
   alert('Signed out!')
-}
-
-const setAuthorizationHeader = token => {
-  const FBIdToken = `Bearer ${token}`
-  storeData('FBIdToken', FBIdToken)
-  axios.defaults.headers.common['Authorization'] = FBIdToken
 }

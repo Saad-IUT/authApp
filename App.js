@@ -20,38 +20,21 @@ const AppStart = () => {
     const tokenData = await getData('token')
     setToken(tokenData)
   }
-  // console.log(authenticated)
-  // const { authenticated } = user
-  // AsyncStorage.clear()
-  // AsyncStorage.getAllKeys((err, keys) => {
-  //   AsyncStorage.multiGet(keys, (error, stores) => {
-  //     stores.map((result, i, store) => {
-  //       console.log({ [store[i][0]]: store[i][1] })
-  //       return true
-  //     })
-  //   })
-  // })
-  // const getAuth = async () => {
-  //   const token = await getData('FBIdToken')
-  //   if (token) {
-  //     const decodedToken = jwtDecode(token)
-  //     if (decodedToken.exp * 1000 < Date.now()) {
-  //       logoutUser(userDispatch)
-  //     } else {
-  //       userDispatch({ type: SET_AUTHENTICATED })
-  //     }
-  //   }
-  // }
+  AsyncStorage.clear()
+  AsyncStorage.getAllKeys((err, keys) => {
+    AsyncStorage.multiGet(keys, (error, stores) => {
+      stores.map((result, i, store) => {
+        console.log({ [store[i][0]]: store[i][1] })
+        return true
+      })
+    })
+  })
   useEffect(() => {
     getToken()
   }, [])
   return (
     <NavigationContainer>
-      {authenticated || token ? (
-        <AppDrawerScreen />
-      ) : (
-        <AuthStackScreen />
-      )}
+      {authenticated || token ? <AppDrawerScreen /> : <AuthStackScreen />}
     </NavigationContainer>
   )
 }

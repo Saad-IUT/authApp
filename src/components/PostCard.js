@@ -22,9 +22,11 @@ const PostCard = ({
   const { data, dataDispatch } = useContext(AppContext)
   const { liked } = data
   let likedBlogs = []
-  liked.forEach(like => {
-    likedBlogs.push(like.blogId)
-  })
+  if (liked) {
+    liked.forEach(like => {
+      likedBlogs.push(like.blogId)
+    })
+  }
   useEffect(() => {
     getLikes(dataDispatch)
   }, [])

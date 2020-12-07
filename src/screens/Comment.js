@@ -13,11 +13,7 @@ import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import dayjs from 'dayjs'
 import CommentCard from '../components/CommentCard'
-import {
-  storeDataJSON,
-  getData,
-  getDataJSON,
-} from '../functions/AsyncStorage'
+import { storeDataJSON, getData, getDataJSON } from '../functions/AsyncStorage'
 import { AppContext } from '../context/store'
 import { getOneBlog } from '../context/actions/dataActions'
 const Comment = ({ navigation, route }) => {
@@ -47,6 +43,7 @@ const Comment = ({ navigation, route }) => {
           userHandle: handle,
         },
       ])
+      alert('Comment added successfully!!')
     } else {
       storeDataJSON('comments', [
         {
@@ -56,6 +53,7 @@ const Comment = ({ navigation, route }) => {
           userHandle: handle,
         },
       ])
+      alert('Comment added successfully!!')
     }
   }
   const onRefresh = () => {

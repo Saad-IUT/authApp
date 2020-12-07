@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { getData, getDataJSON, removeData } from '../../functions/AsyncStorage'
+import {
+  getData,
+  getDataJSON,
+  storeDataJSON,
+} from '../../functions/AsyncStorage'
 import {
   SET_COMMENT,
   LOADING_UI,
@@ -24,35 +28,9 @@ export const detailsUpdate = (date, work, address, dispatch) => {
     })
 }
 
-export const handleComment = async blogId => {
-  const comment = await getData('comment')
-  axios
-    .post(`/blog/${blogId}/comment`, { body: comment })
-    .then(res => {
-      alert('Commented successfully!!')
-    })
-    .catch(err => {
-      console.error(err.response)
-    })
-  removeData('comment')
-}
-
-// export const handlePost = async () => {
-//   const post = await getData('post')
-//   axios
-//     .post('/blog', { body: post })
-//     .then(res => {
-//       alert('Posted successfully!!')
-//     })
-//     .catch(err => {
-//       console.error(err.response)
-//     })
-//   removeData('post')
-// }
-
 export const getPost = async (uiDispatch, dataDispatch) => {
   uiDispatch({ type: LOADING_UI })
-  const posts = await getDataJSON('posts')
+  let posts = await getDataJSON('posts')
   if (posts) {
     dataDispatch({ type: SET_BLOGS, payload: posts })
     uiDispatch({ type: STOP_LOADING_UI })
@@ -62,7 +40,7 @@ export const getPost = async (uiDispatch, dataDispatch) => {
 }
 
 export const getOneBlog = async (blogId, dataDispatch, uiDispatch) => {
-  const commentData = []
+  let commentData = []
   uiDispatch({ type: LOADING_UI })
   let comments = await getDataJSON('comments')
   if (comments) {
@@ -77,35 +55,56 @@ export const getOneBlog = async (blogId, dataDispatch, uiDispatch) => {
   uiDispatch({ type: STOP_LOADING_UI })
 }
 
-export const getLikes = dispatch => {
-  axios
-    .get('/user/me')
-    .then(res => {
-      dispatch({ type: LIKE_SCREAM, payload: res.data.likes })
-    })
-    .catch(err => {
-      console.error(err.response)
-    })
+export const getLikes = async dispatch => {
+  let likes = await getDataJSON('likes')
+  dispatch({ type: LIKE_SCREAM, payload: likes })
 }
 
-export const handleLike = blogId => {
-  axios
-    .get(`/blog/${blogId}/like`)
-    .then(res => {
-      alert('Liked!!')
-    })
-    .catch(err => {
-      alert(err.response.data.error)
-    })
+export const handleLike = async blogId => {
+  let userHandle = await getData('token')
+  let likes = await getDataJSON('likes')
+  let posts = await getDataJSON('posts')
+  posts.forEach(post => {
+    if (post.blogId == blogId) post.likeCount++
+    storeDataJSON('posts', posts)
+  })
+  if (likes) {
+    storeDataJSON('likes', [
+      ...likes,
+      {
+        likeId: Math.random().toString(36).substring(7),
+        userHandle,
+        blogId,
+      },
+    ])
+    alert('Liked')
+  } else {
+    storeDataJSON('likes', [
+      {
+        likeId: Math.random().toString(36).substring(7),
+        userHandle,
+        blogId,
+      },
+    ])
+    alert('Liked')
+  }
 }
 
-export const handleUnlike = blogId => {
-  axios
-    .get(`/blog/${blogId}/unlike`)
-    .then(res => {
-      alert('Unliked!!')
-    })
-    .catch(err => {
-      alert(err.response.data.error)
-    })
+export const handleUnlike = async blogId => {
+  //likecount decrease
+  let posts = await getDataJSON('posts')
+  posts.forEach(post => {
+    if (post.blogId == blogId && post.likeCount > 0) post.likeCount--
+    storeDataJSON('posts', posts)
+  })
+  //remove like
+  let likes = await getDataJSON('likes')
+  let userHandle = await getData('token')
+  let newLikes = []
+  likes.forEach(like => {
+    if (!(like.blogId == blogId && like.userHandle == userHandle))
+      newLikes.push(like)
+  })
+  storeDataJSON('likes', newLikes)
+  alert('Unliked')
 }

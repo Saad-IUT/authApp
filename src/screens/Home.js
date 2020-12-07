@@ -13,7 +13,6 @@ import NavBar from '../components/NavBar'
 import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import { useNetInfo } from '@react-native-community/netinfo'
-// import { handlePost } from '../context/actions/dataActions'
 import { getPost } from '../context/actions/dataActions'
 import { getData, getDataJSON, storeDataJSON } from '../functions/AsyncStorage'
 import { AppContext } from '../context/store'
@@ -38,6 +37,7 @@ const HomeScreen = ({ navigation }) => {
           blogId: Math.random().toString(36).substring(7),
         },
       ])
+      alert('Posted successfully!!')
     } else {
       storeDataJSON('posts', [
         {
@@ -49,6 +49,7 @@ const HomeScreen = ({ navigation }) => {
           blogId: Math.random().toString(36).substring(7),
         },
       ])
+      alert('First Post posted successfully!!')
     }
   }
   const onRefresh = () => {
