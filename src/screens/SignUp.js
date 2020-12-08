@@ -42,7 +42,6 @@ const SignUpScreen = ({ navigation }) => {
             dob: new Date().toISOString(),
             work: 'Please update your workplace',
             location: 'Please update your location',
-            imageUrl: require('../../assets/no-img.png'),
           },
         ])
         navigation.navigate('SignIn')
@@ -57,7 +56,6 @@ const SignUpScreen = ({ navigation }) => {
             dob: new Date().toISOString(),
             work: 'Please update your workplace',
             location: 'Please update your location',
-            imageUrl: require('../../assets/no-img.png'),
           },
         ])
         navigation.navigate('SignIn')

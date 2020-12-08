@@ -30,8 +30,8 @@ const SignInScreen = ({ navigation }) => {
         users.forEach(user => {
           if (user.email == email && user.password == password) {
             userDispatch({ type: SET_AUTHENTICATED })
-            const { handle, dob, work, location, imageUrl } = user
-            storeDataJSON('token', { handle, dob, work, location, imageUrl })
+            const { handle, dob, work, location } = user
+            storeDataJSON('token', { handle, dob, work, location })
           } else {
             setErrors({ general: 'Wrong credentials, please try again!' })
           }

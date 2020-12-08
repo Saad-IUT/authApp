@@ -44,9 +44,7 @@ const ProfileScreen = ({ navigation }) => {
           }}
         >
           <Image
-            source={{
-              uri: credentials.imageUrl,
-            }}
+            source={require('../../assets/my-image.jpg')}
             style={{ width: 300, height: 400, marginLeft: 45 }}
             PlaceholderContent={<ActivityIndicator />}
           />

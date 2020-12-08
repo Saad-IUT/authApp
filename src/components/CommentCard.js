@@ -12,15 +12,10 @@ const CommentCard = ({ name, date, body }) => {
           alignItems: 'center',
         }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Static Profile')
-          }}
-        >
+        
           <Text h4Style={{ padding: 10, fontWeight: 'bold', fontSize: 22 }} h4>
             {name}
           </Text>
-        </TouchableOpacity>
         <Text style={{ fontStyle: 'italic' }}>
           {dayjs(date).format('(DD/MM/YYYY)')}
         </Text>

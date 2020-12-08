@@ -21,20 +21,6 @@ export const getAuthUser = async (uiDispatch, userDispatch) => {
   uiDispatch({ type: STOP_LOADING_UI })
 }
 
-export const getUser = (uiDispatch, userDispatch, name) => {
-  uiDispatch({ type: LOADING_UI })
-  axios
-    .get(`/user/${name}`)
-    .then(res => {
-      userDispatch({ type: SET_USER, payload: res.data })
-      uiDispatch({ type: STOP_LOADING_UI })
-    })
-    .catch(err => {
-      uiDispatch({ type: STOP_LOADING_UI })
-      console.error(err.response)
-    })
-}
-
 export const logoutUser = async dispatch => {
   await removeData('FBIdToken')
   delete axios.defaults.headers.common['Authorization']

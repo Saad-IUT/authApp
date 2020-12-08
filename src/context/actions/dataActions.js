@@ -14,18 +14,12 @@ import {
   ENABLE_INPUT,
 } from '../types'
 
-export const detailsUpdate = (date, work, address, dispatch) => {
+export const detailsUpdate = async (dob, work, location, dispatch) => {
   dispatch({ type: DISABLE_INPUT })
-  axios
-    .post('/user', { dob: date, work: work, location: address })
-    .then(res => {
-      alert('Details added successfully!!')
-      dispatch({ type: ENABLE_INPUT })
-    })
-    .catch(err => {
-      console.error(err.response)
-      dispatch({ type: ENABLE_INPUT })
-    })
+  let token = await getDataJSON('token')
+  token = { ...token, dob, work, location }
+  storeDataJSON('token', token)
+  dispatch({ type: ENABLE_INPUT })
 }
 
 export const getPost = async (uiDispatch, dataDispatch) => {

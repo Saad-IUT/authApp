@@ -44,15 +44,9 @@ const PostCard = ({
           icon={{ name: 'user', type: 'font-awesome', color: 'black' }}
           activeOpacity={1}
         />
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Static Profile', { name })
-          }}
-        >
-          <Text h4Style={{ padding: 10, fontWeight: 'bold' }} h4>
-            {name}
-          </Text>
-        </TouchableOpacity>
+        <Text h4Style={{ padding: 10, fontWeight: 'bold' }} h4>
+          {name}
+        </Text>
       </View>
       <Text style={{ fontStyle: 'italic' }}>
         {dayjs(date).format('[Posted on] DD MMM, YYYY')}
