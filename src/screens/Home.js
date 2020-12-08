@@ -14,7 +14,7 @@ import globalStyles from '../styles/global'
 import PostCard from '../components/PostCard'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { getPost } from '../context/actions/dataActions'
-import { getData, getDataJSON, storeDataJSON } from '../functions/AsyncStorage'
+import { getDataJSON, storeDataJSON } from '../functions/AsyncStorage'
 import { AppContext } from '../context/store'
 
 const HomeScreen = ({ navigation }) => {

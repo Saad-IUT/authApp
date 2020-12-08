@@ -1,6 +1,4 @@
-import axios from 'axios'
 import {
-  getData,
   getDataJSON,
   storeDataJSON,
 } from '../../functions/AsyncStorage'

@@ -3,14 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import AuthStackScreen from './src/routes/AuthStack'
 import { AppContext, AppProvider } from './src/context/store'
 import AppDrawerScreen from './src/routes/AppDrawer'
-import axios from 'axios'
 import { getDataJSON } from './src/functions/AsyncStorage'
-import jwtDecode from 'jwt-decode'
-import { SET_AUTHENTICATED } from './src/context/types'
-import { logoutUser } from './src/context/actions/userActions'
 import AsyncStorage from '@react-native-community/async-storage'
-
-axios.defaults.baseURL = 'https://blogapp47.herokuapp.com'
 
 const AppStart = () => {
   const { user, userDispatch } = useContext(AppContext)

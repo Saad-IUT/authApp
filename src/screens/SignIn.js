@@ -14,7 +14,6 @@ const SignInScreen = ({ navigation }) => {
   const [errors, setErrors] = useState('')
   const { user, userDispatch } = useContext(AppContext)
   const { ui, uiDispatch } = useContext(AppContext)
-  const { data, dataDispatch } = useContext(AppContext)
   const { loading, disable } = ui
   const handleSubmit = async () => {
     let data = validateLoginData({
