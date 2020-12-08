@@ -27,7 +27,7 @@ const Comment = ({ navigation, route }) => {
   const { loading } = ui
   const { blogId, name, date, body, commentCount, likeCount } = route.params
   const handleComment = async () => {
-    const handle = await getData('token')
+    let token = await getDataJSON('token')
     let posts = await getDataJSON('posts')
     let comments = await getDataJSON('comments')
     posts.forEach(post => {
@@ -41,7 +41,7 @@ const Comment = ({ navigation, route }) => {
           blogId,
           body: comment,
           createdAt: new Date().toISOString(),
-          userHandle: handle,
+          userHandle: token.handle,
         },
       ])
       alert('Comment added successfully!!')
@@ -51,7 +51,7 @@ const Comment = ({ navigation, route }) => {
           blogId,
           body: comment,
           createdAt: new Date().toISOString(),
-          userHandle: handle,
+          userHandle: token.handle,
         },
       ])
       alert('Comment added successfully!!')

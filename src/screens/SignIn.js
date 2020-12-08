@@ -5,7 +5,7 @@ import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons'
 import { AppContext } from '../context/store'
 import globalStyles from '../styles/global'
 import { validateLoginData } from '../utils/validators'
-import { getDataJSON, storeData } from '../functions/AsyncStorage'
+import { getDataJSON, storeDataJSON } from '../functions/AsyncStorage'
 import { SET_AUTHENTICATED } from '../context/types'
 
 const SignInScreen = ({ navigation }) => {
@@ -30,8 +30,8 @@ const SignInScreen = ({ navigation }) => {
         users.forEach(user => {
           if (user.email == email && user.password == password) {
             userDispatch({ type: SET_AUTHENTICATED })
-            const handle = user.handle
-            storeData('token', handle)
+            const { handle, dob, work, location } = user
+            storeDataJSON('token', { handle, dob, work, location })
           } else {
             setErrors({ general: 'Wrong credentials, please try again!' })
           }

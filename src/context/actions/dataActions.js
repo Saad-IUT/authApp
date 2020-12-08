@@ -63,7 +63,7 @@ export const getLikes = async dispatch => {
 }
 
 export const handleLike = async blogId => {
-  let userHandle = await getData('token')
+  let token = await getDataJSON('token')
   let likes = await getDataJSON('likes')
   let posts = await getDataJSON('posts')
   posts.forEach(post => {
@@ -75,7 +75,7 @@ export const handleLike = async blogId => {
       ...likes,
       {
         likeId: Math.random().toString(36).substring(7),
-        userHandle,
+        userHandle: token.handle,
         blogId,
       },
     ])
@@ -84,7 +84,7 @@ export const handleLike = async blogId => {
     storeDataJSON('likes', [
       {
         likeId: Math.random().toString(36).substring(7),
-        userHandle,
+        userHandle: token.handle,
         blogId,
       },
     ])
@@ -101,10 +101,10 @@ export const handleUnlike = async blogId => {
   })
   //remove like
   let likes = await getDataJSON('likes')
-  let userHandle = await getData('token')
+  let token = await getDataJSON('token')
   let newLikes = []
   likes.forEach(like => {
-    if (!(like.blogId == blogId && like.userHandle == userHandle))
+    if (!(like.blogId == blogId && like.userHandle == token.handle))
       newLikes.push(like)
   })
   storeDataJSON('likes', newLikes)

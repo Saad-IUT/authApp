@@ -23,7 +23,7 @@ const HomeScreen = ({ navigation }) => {
   const [reload, setReload] = useState(false)
   const [update, setUpdate] = useState(false)
   const handlePost = async () => {
-    const handle = await getData('token')
+    let token = await getDataJSON('token')
     let posts = await getDataJSON('posts')
     if (posts) {
       storeDataJSON('posts', [
@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
           commentCount: 0,
           createdAt: new Date().toISOString(),
           likeCount: 0,
-          userHandle: handle,
+          userHandle: token.handle,
           blogId: Math.random().toString(36).substring(7),
         },
       ])
@@ -45,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
           commentCount: 0,
           createdAt: new Date().toISOString(),
           likeCount: 0,
-          userHandle: handle,
+          userHandle: token.handle,
           blogId: Math.random().toString(36).substring(7),
         },
       ])

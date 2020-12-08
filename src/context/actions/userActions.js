@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { removeData } from '../../functions/AsyncStorage'
+import { getDataJSON, removeData } from '../../functions/AsyncStorage'
 import {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
@@ -14,18 +14,11 @@ import {
   LIKE_SCREAM,
 } from '../types'
 
-export const getAuthUser = (uiDispatch, userDispatch) => {
+export const getAuthUser = async (uiDispatch, userDispatch) => {
   uiDispatch({ type: LOADING_UI })
-  axios
-    .get('/user/me')
-    .then(res => {
-      userDispatch({ type: SET_AUTH_USER, payload: res.data.credentials })
-      uiDispatch({ type: STOP_LOADING_UI })
-    })
-    .catch(err => {
-      uiDispatch({ type: STOP_LOADING_UI })
-      console.error(err.response)
-    })
+  let credentials = await getDataJSON('token')
+  userDispatch({ type: SET_AUTH_USER, payload: credentials })
+  uiDispatch({ type: STOP_LOADING_UI })
 }
 
 export const getUser = (uiDispatch, userDispatch, name) => {

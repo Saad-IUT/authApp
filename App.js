@@ -4,7 +4,7 @@ import AuthStackScreen from './src/routes/AuthStack'
 import { AppContext, AppProvider } from './src/context/store'
 import AppDrawerScreen from './src/routes/AppDrawer'
 import axios from 'axios'
-import { getData } from './src/functions/AsyncStorage'
+import { getDataJSON } from './src/functions/AsyncStorage'
 import jwtDecode from 'jwt-decode'
 import { SET_AUTHENTICATED } from './src/context/types'
 import { logoutUser } from './src/context/actions/userActions'
@@ -17,8 +17,8 @@ const AppStart = () => {
   const { authenticated } = user
   const [token, setToken] = useState(false)
   const getToken = async () => {
-    const tokenData = await getData('token')
-    setToken(tokenData)
+    let tokenData = await getDataJSON('token')
+    if (tokenData) setToken(tokenData.handle)
   }
   // AsyncStorage.clear()
   AsyncStorage.getAllKeys((err, keys) => {
