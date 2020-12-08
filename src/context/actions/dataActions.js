@@ -49,6 +49,8 @@ export const getOneBlog = async (blogId, dataDispatch, uiDispatch) => {
         commentData.push(comment)
         dataDispatch({ type: SET_COMMENT, payload: commentData })
         uiDispatch({ type: STOP_LOADING_UI })
+      } else {
+        dataDispatch({ type: SET_COMMENT, payload: [] })
       }
     })
   }

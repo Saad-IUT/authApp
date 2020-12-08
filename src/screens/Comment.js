@@ -28,8 +28,8 @@ const Comment = ({ navigation, route }) => {
   const { blogId, name, date, body, commentCount, likeCount } = route.params
   const handleComment = async () => {
     const handle = await getData('token')
-    const posts = await getDataJSON('posts')
-    const comments = await getDataJSON('comments')
+    let posts = await getDataJSON('posts')
+    let comments = await getDataJSON('comments')
     posts.forEach(post => {
       if (post.blogId == blogId) post.commentCount++
       storeDataJSON('posts', posts)

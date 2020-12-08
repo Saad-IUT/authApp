@@ -39,6 +39,9 @@ const SignUpScreen = ({ navigation }) => {
             email,
             password,
             confirmPassword,
+            dob: 'Please update your Date of Birth',
+            work: 'Please update your workplace',
+            location: 'Please update your location',
           },
         ])
         navigation.navigate('SignIn')
@@ -50,6 +53,9 @@ const SignUpScreen = ({ navigation }) => {
             email,
             password,
             confirmPassword,
+            dob: 'Please update your Date of Birth',
+            work: 'Please update your workplace',
+            location: 'Please update your location',
           },
         ])
         navigation.navigate('SignIn')

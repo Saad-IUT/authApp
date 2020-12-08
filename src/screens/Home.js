@@ -56,10 +56,10 @@ const HomeScreen = ({ navigation }) => {
   const onRefresh = () => {
     reload ? setReload(false) : setReload(true)
   }
-  const netInfo = useNetInfo()
-  if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
-    alert('No Internet!')
-  }
+  // const netInfo = useNetInfo()
+  // if (netInfo.type != 'unknown' && !netInfo.isInternetReachable) {
+  //   alert('No Internet!')
+  // }
 
   const { ui, uiDispatch } = useContext(AppContext)
   const { data, dataDispatch } = useContext(AppContext)
