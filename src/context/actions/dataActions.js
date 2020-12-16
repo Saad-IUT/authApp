@@ -24,7 +24,7 @@ export const getPost = async (uiDispatch, dataDispatch) => {
   uiDispatch({ type: LOADING_UI })
   let posts = await getDataJSON('posts')
   if (posts) {
-    dataDispatch({ type: SET_BLOGS, payload: posts })
+    dataDispatch({ type: SET_BLOGS, payload: posts.reverse() })
     uiDispatch({ type: STOP_LOADING_UI })
   } else {
     uiDispatch({ type: STOP_LOADING_UI })

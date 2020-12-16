@@ -14,15 +14,7 @@ const AppStart = () => {
     let tokenData = await getDataJSON('token')
     if (tokenData) setToken(tokenData.handle)
   }
-  // AsyncStorage.clear()
-  AsyncStorage.getAllKeys((err, keys) => {
-    AsyncStorage.multiGet(keys, (error, stores) => {
-      stores.map((result, i, store) => {
-        console.log({ [store[i][0]]: store[i][1] })
-        return true
-      })
-    })
-  })
+
   useEffect(() => {
     getToken()
   }, [])
